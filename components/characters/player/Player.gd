@@ -45,6 +45,8 @@ const ACTION_DATA = {
 @onready var stats = $stats
 @onready var passives = $passives
 
+var mouse_lock = true
+
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
@@ -140,7 +142,16 @@ func _handle_input():
 	if Input.is_action_just_pressed("interact"):
 		if nearest_interactable:
 			nearest_interactable.on_interaction(self)
-
+			
+	if Input.is_action_just_pressed("settings"):
+		if mouse_lock:
+			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+			$"CanvasLayer/settings_ui".visible = true
+			mouse_lock = false
+		else:
+			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+			mouse_lock = true
+			$"CanvasLayer/settings_ui".visible = false
 
 #
 #	Interaction Monitoring
@@ -216,7 +227,7 @@ func _handle_hitbox_collision(body):
 
 
 
-func hit(damage, direction):
+func hit(_damage, direction):
 	action_delta = 0
 	impact_dir = direction * BASE_KNOCKBACK
 	impact_dir.y = 0

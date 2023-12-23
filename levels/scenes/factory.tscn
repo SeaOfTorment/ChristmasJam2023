@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://b602e6nu4q1pj" path="res://levels/scenes/factory_scene/santas_factory_scene_inh.tscn" id="1_p8ihi"]
 [ext_resource type="PackedScene" uid="uid://ggxqscmbpasw" path="res://components/characters/player/Player.tscn" id="2_i1as5"]
 [ext_resource type="Texture2D" uid="uid://rqwysj727omt" path="res://components/particles/textures/smoke.png" id="3_4pmh1"]
-[ext_resource type="PackedScene" path="res://components/particles/snow_fall_forfactory.tscn" id="3_ejutb"]
+[ext_resource type="PackedScene" uid="uid://v5cjvx4o220v" path="res://components/particles/snow_fall_forfactory.tscn" id="3_ejutb"]
 [ext_resource type="PackedScene" uid="uid://cb6kcs2q00kus" path="res://levels/scenes/factory_scene/prefabs/tree.glb" id="4_l7mgf"]
 [ext_resource type="AudioStream" uid="uid://dhydj7qf5vicg" path="res://sounds/music/Fefoe-Music_overall_game.mp3" id="6_tdrah"]
 [ext_resource type="PackedScene" uid="uid://cex2rmgvnd1k1" path="res://levels/scenes/factory_scene/prefabs/rug.glb" id="7_hclnf"]
@@ -27,7 +27,6 @@ ssao_radius = 2.94
 ssil_enabled = true
 ssil_radius = 16.0
 ssil_intensity = 4.57
-sdfgi_enabled = true
 sdfgi_use_occlusion = true
 glow_enabled = true
 glow_normalized = true
