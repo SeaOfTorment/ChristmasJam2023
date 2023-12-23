@@ -8,7 +8,6 @@ extends VBoxContainer
 @onready var ui_hp_prog = $"HBoxContainer/hub/HP_PROG"
 @onready var ui_debug_stats = $"HBoxContainer/debug/stats"
 var debug_stat_boiler = "
-STAT: BASE + PASSIVE
 DM: %s + %s
 HP: %s + %s
 MS: %s + %s
@@ -22,7 +21,7 @@ func _ready():
 	
 	
 func _process(_delta):
-	ui_hp.text = str(current_hp)
+	ui_hp.text = str(current_hp) + " / " + str(stats.base_hp + passives.bonus_health)
 	ui_hp_prog.value = current_hp
 	ui_hp_prog.max_value = stats.base_hp + passives.bonus_health
 	ui_debug_stats.text = (

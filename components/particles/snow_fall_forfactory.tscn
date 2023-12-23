@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://v5cjvx4o220v"]
 
 [ext_resource type="PackedScene" uid="uid://dcm4k4d0ut1ke" path="res://components/particles/snow_fall.tscn" id="1_y5iw8"]
-[ext_resource type="Texture2D" uid="uid://c1rbm6w4ixb6w" path="res://components/particles/textures/snow_gradiant.tres" id="2_xu7la"]
+[ext_resource type="Texture2D" uid="uid://c60b4jgf318fl" path="res://components/particles/textures/snow_gradiant.tres" id="2_xu7la"]
 
 [sub_resource type="Gradient" id="Gradient_4hsyr"]
 offsets = PackedFloat32Array(0, 0.113402, 0.350515, 0.886598, 1)
