@@ -42,6 +42,9 @@ const ACTION_DATA = {
 @onready var mesh = $betterAnim
 @onready var animation = $betterAnim/AnimationPlayer
 
+@onready var stats = $stats
+@onready var passives = $passives
+
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
@@ -209,7 +212,8 @@ func _handle_hitbox_collision(body):
 		attack_hit_bodies.append(body)
 		var direction = (body.global_position - global_position).normalized()
 		direction.y = 0
-		body.hit(1, direction)
+		body.hit(stats.weapon_dmg + passives.damage, direction)
+
 
 
 func hit(damage, direction):

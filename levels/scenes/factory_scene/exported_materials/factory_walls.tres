@@ -1,0 +1,7 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://bkaqhx0x42l5e"]
+
+[resource]
+resource_name = "factory_walls"
+cull_mode = 2
+albedo_color = Color(0.573863, 0.573863, 0.573863, 1)
+roughness = 0.5

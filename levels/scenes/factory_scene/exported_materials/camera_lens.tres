@@ -1,0 +1,9 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://c4vq1x3ki5a6l"]
+
+[resource]
+resource_name = "camera_lens"
+cull_mode = 2
+metallic = 1.0
+emission_enabled = true
+emission = Color(1, 0, 0, 1)
+emission_energy_multiplier = 9.37

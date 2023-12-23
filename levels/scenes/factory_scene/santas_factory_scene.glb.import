@@ -1,0 +1,161 @@
+[remap]
+
+importer="scene"
+importer_version=1
+type="PackedScene"
+uid="uid://fleilc600n31"
+path="res://.godot/imported/santas_factory_scene.glb-f2e8d33d434996eed06929fdbaed563b.scn"
+
+[deps]
+
+source_file="res://levels/scenes/factory_scene/santas_factory_scene.glb"
+dest_files=["res://.godot/imported/santas_factory_scene.glb-f2e8d33d434996eed06929fdbaed563b.scn"]
+
+[params]
+
+nodes/root_type=""
+nodes/root_name=""
+nodes/apply_root_scale=true
+nodes/root_scale=1.0
+meshes/ensure_tangents=true
+meshes/generate_lods=true
+meshes/create_shadow_meshes=true
+meshes/light_baking=1
+meshes/lightmap_texel_size=0.2
+meshes/force_disable_compression=false
+skins/use_named_skins=true
+animation/import=true
+animation/fps=30
+animation/trimming=false
+animation/remove_immutable_tracks=true
+import_script/path=""
+_subresources={
+"materials": {
+"Material.001": {
+"use_external/enabled": true,
+"use_external/path": "res://levels/scenes/factory_scene/exported_materials/Material.001.tres"
+},
+"Material.002": {
+"use_external/enabled": true,
+"use_external/path": "res://levels/scenes/factory_scene/exported_materials/Material.002.tres"
+},
+"Material.004": {
+"use_external/enabled": true,
+"use_external/path": "res://levels/scenes/factory_scene/exported_materials/Material.004.tres"
+},
+"bars": {
+"use_external/enabled": true,
+"use_external/path": "res://levels/scenes/factory_scene/exported_materials/bars.tres"
+},
+"camera_body": {
+"use_external/enabled": true,
+"use_external/path": "res://levels/scenes/factory_scene/exported_materials/camera_body.tres"
+},
+"camera_lens": {
+"use_external/enabled": true,
+"use_external/path": "res://levels/scenes/factory_scene/exported_materials/camera_lens.tres"
+},
+"cell_lock": {
+"use_external/enabled": true,
+"use_external/path": "res://levels/scenes/factory_scene/exported_materials/cell_lock.tres"
+},
+"cell_lock_wf": {
+"use_external/enabled": true,
+"use_external/path": "res://levels/scenes/factory_scene/exported_materials/cell_lock_wf.tres"
+},
+"convayer_base": {
+"use_external/enabled": true,
+"use_external/path": "res://levels/scenes/factory_scene/exported_materials/convayer_base.tres"
+},
+"convayer_rolls": {
+"use_external/enabled": true,
+"use_external/path": "res://levels/scenes/factory_scene/exported_materials/convayer_rolls.tres"
+},
+"convayer_stands": {
+"use_external/enabled": true,
+"use_external/path": "res://levels/scenes/factory_scene/exported_materials/convayer_stands.tres"
+},
+"convayer_strap": {
+"use_external/enabled": true,
+"use_external/path": "res://levels/scenes/factory_scene/exported_materials/convayer_strap.tres"
+},
+"factory_bars": {
+"use_external/enabled": true,
+"use_external/path": "res://levels/scenes/factory_scene/exported_materials/factory_bars.tres"
+},
+"factory_celing": {
+"use_external/enabled": true,
+"use_external/path": "res://levels/scenes/factory_scene/exported_materials/factory_celing.tres"
+},
+"factory_embedded_windows": {
+"use_external/enabled": true,
+"use_external/path": "res://levels/scenes/factory_scene/exported_materials/factory_embedded_windows.tres"
+},
+"factory_floor": {
+"use_external/enabled": true,
+"use_external/path": "res://levels/scenes/factory_scene/exported_materials/factory_floor.tres"
+},
+"factory_jail": {
+"use_external/enabled": true,
+"use_external/path": "res://levels/scenes/factory_scene/exported_materials/factory_jail.tres"
+},
+"factory_overhead_emission": {
+"use_external/enabled": true,
+"use_external/path": "res://levels/scenes/factory_scene/exported_materials/factory_overhead_emission.tres"
+},
+"factory_overhead_light_base": {
+"use_external/enabled": true,
+"use_external/path": "res://levels/scenes/factory_scene/exported_materials/factory_overhead_light_base.tres"
+},
+"factory_walls": {
+"use_external/enabled": true,
+"use_external/path": "res://levels/scenes/factory_scene/exported_materials/factory_walls.tres"
+},
+"glass": {
+"use_external/enabled": true,
+"use_external/path": "res://levels/scenes/factory_scene/exported_materials/glass.tres"
+},
+"mod1_base": {
+"use_external/enabled": true,
+"use_external/path": "res://levels/scenes/factory_scene/exported_materials/mod1_base.tres"
+},
+"mod1_v1": {
+"use_external/enabled": true,
+"use_external/path": "res://levels/scenes/factory_scene/exported_materials/mod1_v1.tres"
+},
+"mod1_v2": {
+"use_external/enabled": true,
+"use_external/path": "res://levels/scenes/factory_scene/exported_materials/mod1_v2.tres"
+},
+"mod2_buttons": {
+"use_external/enabled": true,
+"use_external/path": "res://levels/scenes/factory_scene/exported_materials/mod2_buttons.tres"
+},
+"one-way_glass": {
+"use_external/enabled": true,
+"use_external/path": "res://levels/scenes/factory_scene/exported_materials/one-way_glass.tres"
+},
+"tv_bevels": {
+"use_external/enabled": true,
+"use_external/path": "res://levels/scenes/factory_scene/exported_materials/tv_bevels.tres"
+},
+"tv_bevels.001": {
+"use_external/enabled": true,
+"use_external/path": "res://levels/scenes/factory_scene/exported_materials/tv_bevels.001.tres"
+},
+"tv_screen": {
+"use_external/enabled": true,
+"use_external/path": "res://levels/scenes/factory_scene/exported_materials/tv_screen.tres"
+},
+"tv_screen.001": {
+"use_external/enabled": true,
+"use_external/path": "res://levels/scenes/factory_scene/exported_materials/tv_screen.001.tres"
+},
+"tv_stand": {
+"use_external/enabled": true,
+"use_external/path": "res://levels/scenes/factory_scene/exported_materials/tv_stand.tres"
+}
+}
+}
+gltf/naming_version=1
+gltf/embedded_image_handling=1

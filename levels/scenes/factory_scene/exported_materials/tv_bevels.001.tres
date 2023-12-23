@@ -1,0 +1,7 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://dc80ydhamoh4n"]
+
+[resource]
+resource_name = "tv_bevels.001"
+cull_mode = 2
+albedo_color = Color(0.196858, 0.196858, 0.196858, 1)
+roughness = 0.5
