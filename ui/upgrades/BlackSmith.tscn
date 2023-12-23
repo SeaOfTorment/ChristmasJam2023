@@ -1,0 +1,52 @@
+[gd_scene load_steps=2 format=3 uid="uid://c0kkfa7aixwel"]
+
+[ext_resource type="Script" path="res://ui/upgrades/BlackSmith.gd" id="1_241yd"]
+
+[node name="BlackSmith" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_241yd")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 0
+offset_right = 666.0
+offset_bottom = 386.0
+
+[node name="Name" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 30.0
+offset_top = 34.0
+offset_right = 497.0
+offset_bottom = 69.0
+text = "Weapon: "
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 518.0
+offset_top = 129.0
+offset_right = 593.0
+offset_bottom = 160.0
+text = "Upgrade"
+
+[node name="Attributes" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 65.0
+offset_top = 89.0
+offset_right = 465.0
+offset_bottom = 237.0
+
+[node name="Exit" type="Button" parent="."]
+layout_mode = 0
+offset_left = 627.0
+offset_top = 7.0
+offset_right = 659.0
+offset_bottom = 38.0
+text = "x
+"
+
+[connection signal="pressed" from="Button" to="." method="upgrade"]
+[connection signal="pressed" from="Exit" to="." method="exit"]

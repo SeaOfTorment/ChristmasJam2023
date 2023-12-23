@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://ggxqscmbpasw"]
+[gd_scene load_steps=6 format=3 uid="uid://ggxqscmbpasw"]
 
 [ext_resource type="Script" path="res://components/characters/player/Player.gd" id="1_73hjx"]
 [ext_resource type="PackedScene" uid="uid://di3bq3ovj0hxc" path="res://components/characters/player/PlayerMeshMain.tscn" id="2_g80cy"]
+[ext_resource type="PackedScene" uid="uid://o12e7owlm206" path="res://ui/interactable/InteractIndicator.tscn" id="3_sm7o5"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_wku1q"]
 radius = 0.3
@@ -28,3 +29,7 @@ spring_length = 4.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5.21233)
 visible = false
 mesh = SubResource("BoxMesh_sph27")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="InteractIndicator" parent="CanvasLayer" instance=ExtResource("3_sm7o5")]

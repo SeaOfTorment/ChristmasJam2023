@@ -1,0 +1,27 @@
+[gd_scene load_steps=2 format=3 uid="uid://o12e7owlm206"]
+
+[sub_resource type="Theme" id="Theme_fjicm"]
+/colors/panel = Color(1, 1, 1, 1)
+Panel/styles/panel = null
+
+[node name="InteractIndicator" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 0
+offset_right = 436.0
+offset_bottom = 114.0
+theme = SubResource("Theme_fjicm")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 8.0
+offset_right = 428.0
+offset_bottom = 108.0
+text = "E"

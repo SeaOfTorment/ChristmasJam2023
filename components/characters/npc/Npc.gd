@@ -13,16 +13,17 @@ const ATTACK_SLOW = 0.1
 const JUMP_TIME = 0.8
 const LAND_TIME = 0.2
 
+const BASE_KNOCKBACK = 10
 const STUN_TIME = 0.2
 
 const ANIMATION_MAP = {
-	IDLE: "idle",
-	RUN: "run",
-	FALL: "AirTime",
-	JUMP: "jump",
-	IMPACT: "impact2",
-	ATTACK: "attack1",
-	LAND: "Land"
+	IDLE: "Baked_Idle",
+	RUN: "Baked_Run",
+	FALL: "Baked_Falling",
+	JUMP: "Baked_FallingStart",
+	IMPACT: "Baked_Get-Hit",
+	ATTACK: "Baked_Attack_Weapon",
+	LAND: "Baked_FallingEnd"
 }
 
 const ACTION_DATA = {
@@ -37,8 +38,8 @@ const ACTION_DATA = {
 
 @onready var hitbox = $betterAnim/Armature/Skeleton3D/BoneAttachment3D/sword/AttackHitbox
 
-@onready var mesh = $betterAnim
-@onready var animation = $betterAnim/AnimationPlayer
+@onready var mesh = $character_model
+@onready var animation = $character_model/AnimationPlayer
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -99,6 +100,15 @@ var current_control = DEFAULT_CONTROL.duplicate()
 @export var target_to_attack : CharacterBody3D
 @onready var nav_agent = $NavigationAgent3D
 
+#
+#	Interaction Functions
+#
+func on_interaction(source):
+	print("interacting with ", source)
+
+
+func get_interaction_text():
+	return "Talk to NPC"
 
 
 func _handle_ai(_delta):
@@ -153,18 +163,16 @@ func _handle_attack(delta):
 func _handle_hitbox_collision(body):
 	if (body.has_method("hit") && body != self):
 		if (body in attack_hit_bodies):
-			print("already hit!")
 			return
-		print("hit! ", body)
 		attack_hit_bodies.append(body)
-		var direction = body.global_position - global_position
-		direction.y += 1
+		var direction = (body.global_position - global_position).normalized()
+		direction.y = 0
 		body.hit(1, direction)
 
 
 func hit(damage, direction):
 	action_delta = 0
-	impact_dir = direction.normalized() * 5
+	impact_dir = direction * BASE_KNOCKBACK
 	impact_dir.y = 0
 	if active_state != IMPACT:
 		impact_timer = STUN_TIME
@@ -213,7 +221,7 @@ func _state_update(state, _prev_state): #underscored to prevent error on unused 
 	if state in ANIMATION_MAP:
 		animation.play(ANIMATION_MAP[state])
 	else:
-		animation.play("idle")
+		animation.play("Baked_Idle")
 
 
 #
@@ -230,7 +238,7 @@ func _physics_process(delta):
 	else:
 		if target_to_attack: _handle_ai(delta)
 		_update_cd(delta)
-		_handle_attack(delta)
+		if hitbox: _handle_attack(delta)
 		
 		if input["attack"]: attack()
 		

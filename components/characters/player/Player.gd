@@ -9,10 +9,12 @@ const JUMP_VELOCITY = 6
 const SENSE_REDUCE = 0.5
 
 const ATTACK_SLOW = 0.1
+const INTERACT_RANGE = 3
 
 const JUMP_TIME = 0.8
 const LAND_TIME = 0.2
 
+const BASE_KNOCKBACK = 10
 const STUN_TIME = 0.2
 
 const ANIMATION_MAP = {
@@ -42,7 +44,6 @@ const ACTION_DATA = {
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
-
 
 var mouse_sens_x = 0.1
 var mouse_sens_y = 0.1
@@ -75,7 +76,6 @@ var impact_timer = 0
 var impact_dir = Vector3(0, 0, 0)
 
 
-
 #
 # Animation vars
 #
@@ -96,6 +96,7 @@ var being_controlled = false
 var control_time = 0
 var current_control = DEFAULT_CONTROL.duplicate()
 
+var nearest_interactable = null
 
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -132,6 +133,42 @@ func _handle_input():
 	_check_input_pressed("move_backwards")
 	_check_input_just_pressed("jump")
 	_check_input_pressed("attack")
+	
+	if Input.is_action_just_pressed("interact"):
+		if nearest_interactable:
+			nearest_interactable.on_interaction(self)
+
+
+#
+#	Interaction Monitoring
+#
+func _check_interactables():
+	var interactables = get_tree().get_nodes_in_group("interactables")
+	if interactables.size() < 1:
+		nearest_interactable = null
+		$CanvasLayer/InteractIndicator.hide()
+		return
+	
+	var nearest = interactables[0]
+	var dist = nearest.global_position.distance_to(global_position)
+
+	for i in interactables:
+		if i.global_position.distance_to(global_position) < nearest.global_position.distance_to(global_position):
+			nearest = i
+			dist = nearest.global_position.distance_to(global_position)
+	
+	if dist < INTERACT_RANGE:
+		show_interactable_ui(nearest)
+		nearest_interactable = nearest
+	else:
+		nearest_interactable = null
+		$CanvasLayer/InteractIndicator.hide()
+
+
+func show_interactable_ui(object):
+	$CanvasLayer/InteractIndicator.show()
+	$CanvasLayer/InteractIndicator/RichTextLabel.text = "E to " + object.get_interaction_text()
+	pass
 
 
 #
@@ -168,18 +205,16 @@ func _handle_attack(delta):
 func _handle_hitbox_collision(body):
 	if (body.has_method("hit") && body != self):
 		if (body in attack_hit_bodies):
-			print("already hit!")
 			return
-		print("hit! ", body)
 		attack_hit_bodies.append(body)
-		var direction = body.global_position - global_position
-		direction.y += 1
+		var direction = (body.global_position - global_position).normalized()
+		direction.y = 0
 		body.hit(1, direction)
 
 
 func hit(damage, direction):
 	action_delta = 0
-	impact_dir = direction.normalized() * 5
+	impact_dir = direction * BASE_KNOCKBACK
 	impact_dir.y = 0
 	if active_state != IMPACT:
 		impact_timer = STUN_TIME
@@ -246,6 +281,7 @@ func _physics_process(delta):
 		_handle_input()
 		_update_cd(delta)
 		_handle_attack(delta)
+		_check_interactables()
 		
 		if input["attack"]: attack()
 		

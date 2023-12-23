@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://cm8sfsfsxp802"]
+[gd_scene load_steps=7 format=3 uid="uid://cm8sfsfsxp802"]
 
 [ext_resource type="PackedScene" uid="uid://d3bqcl4qj66ua" path="res://levels/TestLevel.tscn" id="1_is10m"]
 [ext_resource type="PackedScene" uid="uid://ggxqscmbpasw" path="res://components/characters/player/Player.tscn" id="2_n8fi4"]
 [ext_resource type="PackedScene" uid="uid://dn2jnthg0mc1i" path="res://components/test/BoxObject.tscn" id="3_8fvvr"]
+[ext_resource type="PackedScene" uid="uid://idr1p5jxctxq" path="res://components/characters/blacksmith/BlackSmith.tscn" id="4_478nw"]
 [ext_resource type="PackedScene" uid="uid://dis5xuhvijuh" path="res://components/characters/npc/Npc.tscn" id="5_re1nt"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_k47pl"]
@@ -50,6 +51,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.14479, 1.83977, 1.36809)
 [node name="Npc" parent="." node_paths=PackedStringArray("target_to_attack") instance=ExtResource("5_re1nt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.52186, 1.35394, 3.86637)
 target_to_attack = NodePath("../Player")
+
+[node name="BlackSmith" parent="." instance=ExtResource("4_478nw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.87925, 1.16459, 0)
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("NavigationMesh_k47pl")

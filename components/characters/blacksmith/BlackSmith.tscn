@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://idr1p5jxctxq"]
+
+[ext_resource type="Script" path="res://components/characters/blacksmith/BlackSmith.gd" id="1_vlqqo"]
+[ext_resource type="PackedScene" uid="uid://can4b1yjl3w0r" path="res://assets/character/character_model.tscn" id="2_hbkh4"]
+[ext_resource type="PackedScene" uid="uid://c0kkfa7aixwel" path="res://ui/upgrades/BlackSmith.tscn" id="3_jxboo"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_wku1q"]
+radius = 0.3
+
+[node name="BlackSmith" type="CharacterBody3D" groups=["interactables"]]
+script = ExtResource("1_vlqqo")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_wku1q")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+
+[node name="character_model" parent="." instance=ExtResource("2_hbkh4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.959385, 0)
+model = 0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="BlackSmith" parent="CanvasLayer" instance=ExtResource("3_jxboo")]
+offset_left = 267.0
+offset_top = 125.0
+offset_right = 267.0
+offset_bottom = 125.0
