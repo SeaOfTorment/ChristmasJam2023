@@ -2,7 +2,7 @@ extends VBoxContainer
 
 @export var passives : Node
 @export var stats: Node
-
+@export var player: CharacterBody3D
 @onready var ui = $"HBoxContainer"
 @onready var ui_hp = $"HBoxContainer/hub/HP"
 @onready var ui_hp_prog = $"HBoxContainer/hub/HP_PROG"
@@ -14,15 +14,13 @@ MS: %s + %s
 AS: %s + %s
 HR: %s + %s"
 
-@onready var current_hp: float = stats.base_hp
-
 func _ready():
-	ui_hp.text = str(current_hp)
+	ui_hp.text = str(player.hp)
 	
 	
 func _process(_delta):
-	ui_hp.text = str(current_hp) + " / " + str(stats.base_hp + passives.bonus_health)
-	ui_hp_prog.value = current_hp
+	ui_hp.text = str(player.hp) + " / " + str(stats.base_hp + passives.bonus_health)
+	ui_hp_prog.value = player.hp
 	ui_hp_prog.max_value = stats.base_hp + passives.bonus_health
 	ui_debug_stats.text = (
 		debug_stat_boiler % [
@@ -38,3 +36,7 @@ func _process(_delta):
 			passives.heal_rate
 			]
 		)
+
+
+func _on_check_button_toggled(toggled_on):
+	pass # Replace with function body.

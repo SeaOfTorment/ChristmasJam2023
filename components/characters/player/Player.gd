@@ -80,6 +80,8 @@ var land_state_cd = 0
 var impact_timer = 0
 var impact_dir = Vector3(0, 0, 0)
 
+#Game variables
+var hp
 
 #
 # Animation vars
@@ -105,13 +107,14 @@ var nearest_interactable = null
 
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-
+	var temp_stats = calc_stats()
+	hp = temp_stats["HP"]
 
 #
 #	Input Monitoring
 #
 func _input(event):
-	if event is InputEventMouseMotion:
+	if mouse_lock and event is InputEventMouseMotion:
 		rotate_y(deg_to_rad(-event.relative.x * mouse_sens_x * SENSE_REDUCE))
 		camera_mount.rotate_x(deg_to_rad(-event.relative.y * mouse_sens_y * SENSE_REDUCE))
 		camera_mount.rotation.x = clamp(camera_mount.rotation.x, deg_to_rad(-90), deg_to_rad(90))
@@ -152,6 +155,7 @@ func _handle_input():
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 			mouse_lock = true
 			$"CanvasLayer/settings_ui".visible = false
+			
 
 #
 #	Interaction Monitoring
@@ -227,13 +231,14 @@ func _handle_hitbox_collision(body):
 
 
 
-func hit(_damage, direction):
+func hit(damage, direction):
 	action_delta = 0
 	impact_dir = direction * BASE_KNOCKBACK
 	impact_dir.y = 0
 	if active_state != IMPACT:
 		impact_timer = STUN_TIME
 	add_state(IMPACT)
+	hp -= damage
 
 
 func _update_cd(delta):
@@ -288,6 +293,11 @@ func _physics_process(delta):
 	if being_controlled:
 		_handle_controller(delta)
 		return
+	
+	if !mouse_lock:
+		_handle_input()
+		return
+
 	
 	if active_state == IMPACT:
 		if (impact_timer - STUN_TIME > -0.01):
@@ -401,4 +411,13 @@ func get_cd(type = "basic_attack"):
 	return {
 		"active_cd": active_cds[type],
 		"cd": ACTION_DATA[type]["cd"]
+	}
+
+func calc_stats():
+	return {
+		"DM": stats.weapon_dmg + passives.damage,
+		"HP": stats.base_hp + passives.bonus_health,
+		"MS": stats.base_ms + passives.movement_speed,
+		"AS": stats.base_as + passives.attack_speed,
+		"HR": stats.base_heal_rate + passives.heal_rate,
 	}

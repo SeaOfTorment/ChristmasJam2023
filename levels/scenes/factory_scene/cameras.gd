@@ -1,6 +1,6 @@
 extends MeshInstance3D
 
-@onready var cam = $"../../Player/CameraMount/SpringArm3D/Camera3D"
+@onready var cam = $"../../../Player/CameraMount/SpringArm3D/Camera3D"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

@@ -39,8 +39,9 @@ const RANGE = {
 
 @onready var name_label = $Name
 @onready var attribute_label = $Attributes
+var player = null
 
-var current_upgrade = 0
+var next_upgrade = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -50,12 +51,12 @@ func _ready():
 
 
 func render_weapon_stats():
-	if current_upgrade >= WEAPON_TYPE.size():
+	if next_upgrade >= WEAPON_TYPE.size():
 		name_label.text = "No More Upgrades..."
 		attribute_label.text = ""
 		return
 
-	var weapon_dat = WEAPON_TYPE[current_upgrade]
+	var weapon_dat = WEAPON_TYPE[next_upgrade]
 	
 	name_label.text = "Weapon: " + weapon_dat["name"]
 	
@@ -74,7 +75,7 @@ func render_weapon_stats():
 
 func upgrade():
 	if true: # condition
-		current_upgrade += 1
+		next_upgrade += 1
 		render_weapon_stats()
 
 

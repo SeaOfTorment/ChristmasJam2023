@@ -35,6 +35,7 @@ const ACTION_DATA = {
 	}
 }
 
+@export var player: CharacterBody3D
 
 @onready var hitbox = $betterAnim/Armature/Skeleton3D/BoneAttachment3D/sword/AttackHitbox
 
@@ -100,6 +101,8 @@ var current_control = DEFAULT_CONTROL.duplicate()
 @export var target_to_attack : CharacterBody3D
 @onready var nav_agent = $NavigationAgent3D
 
+func _ready():
+	$"CanvasLayer/BlackSmith".player = player
 
 #
 #	Black Smith Functions
