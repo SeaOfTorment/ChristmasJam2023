@@ -39,6 +39,7 @@ glow_intensity = 1.0
 glow_strength = 1.14
 glow_bloom = 0.2
 glow_blend_mode = 1
+volumetric_fog_enabled = true
 volumetric_fog_density = 0.02
 volumetric_fog_albedo = Color(0.490196, 0.490196, 0.490196, 1)
 volumetric_fog_sky_affect = 0.24

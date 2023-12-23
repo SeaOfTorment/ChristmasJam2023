@@ -39,4 +39,4 @@ func _process(_delta):
 
 
 func _on_check_button_toggled(toggled_on):
-	pass # Replace with function body.
+	$"../../../WorldEnvironment".environment.sdfgi_enabled = toggled_on
