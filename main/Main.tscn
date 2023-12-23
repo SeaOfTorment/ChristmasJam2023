@@ -1,12 +1,15 @@
-[gd_scene load_steps=4 format=3 uid="uid://cm8sfsfsxp802"]
+[gd_scene load_steps=6 format=3 uid="uid://cm8sfsfsxp802"]
 
 [ext_resource type="PackedScene" uid="uid://d3bqcl4qj66ua" path="res://levels/TestLevel.tscn" id="1_is10m"]
 [ext_resource type="PackedScene" uid="uid://ggxqscmbpasw" path="res://components/characters/player/Player.tscn" id="2_n8fi4"]
 [ext_resource type="PackedScene" uid="uid://dn2jnthg0mc1i" path="res://components/test/BoxObject.tscn" id="3_8fvvr"]
+[ext_resource type="PackedScene" uid="uid://dis5xuhvijuh" path="res://components/characters/npc/Npc.tscn" id="5_re1nt"]
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_k47pl"]
+vertices = PackedVector3Array(-9.5, 0.5, -9.5, -9.5, 0.5, 9.5, 9.5, 0.5, 9.5, 9.5, 0.5, -9.5)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
 
 [node name="Main" type="Node3D"]
-
-[node name="TestLevel" parent="." instance=ExtResource("1_is10m")]
 
 [node name="Player" parent="." instance=ExtResource("2_n8fi4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.344642, 1.20982, 0.778565)
@@ -43,3 +46,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.19979, 1.57883, 0)
 
 [node name="BoxObject3" parent="." instance=ExtResource("3_8fvvr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.14479, 1.83977, 1.36809)
+
+[node name="Npc" parent="." node_paths=PackedStringArray("target_to_attack") instance=ExtResource("5_re1nt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.52186, 1.35394, 3.86637)
+target_to_attack = NodePath("../Player")
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_k47pl")
+
+[node name="TestLevel" parent="NavigationRegion3D" instance=ExtResource("1_is10m")]

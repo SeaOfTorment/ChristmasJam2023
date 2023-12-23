@@ -1,13 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://dis5xuhvijuh"]
+[gd_scene load_steps=4 format=3 uid="uid://dis5xuhvijuh"]
 
 [ext_resource type="Script" path="res://components/characters/npc/Npc.gd" id="1_dd1up"]
 [ext_resource type="PackedScene" uid="uid://di3bq3ovj0hxc" path="res://components/characters/player/PlayerMeshMain.tscn" id="2_g72oc"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_wku1q"]
 radius = 0.3
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_hgt05"]
-size = Vector3(0.25, 0.25, 0.25)
 
 [node name="Npc" type="CharacterBody3D"]
 script = ExtResource("1_dd1up")
@@ -18,18 +15,4 @@ transform = Transform3D(-1, 3.48787e-16, -8.74228e-08, 3.48787e-16, 1, -3.48787e
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_wku1q")
 
-[node name="CameraMount" type="Node3D" parent="."]
-
-[node name="SpringArm3D" type="SpringArm3D" parent="CameraMount"]
-spring_length = 4.0
-
-[node name="Camera3D" type="Camera3D" parent="CameraMount/SpringArm3D"]
-current = true
-
-[node name="AttackHitbox" type="Area3D" parent="."]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="AttackHitbox"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0746698, -1.06203)
-shape = SubResource("BoxShape3D_hgt05")
-
-[connection signal="body_entered" from="AttackHitbox" to="." method="_handle_hitbox_collision"]
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]

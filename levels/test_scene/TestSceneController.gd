@@ -15,26 +15,17 @@ func play_animation():
 	steve.being_controlled = true
 	$Camera3D.current = true
 	
-	
-	bob.set_control({
-		"animation": "run",
-		"end_position": Vector3(5, 1.142, 3),
-		"time": 3
+	steve.set_control({
+		"animation": "jump",
+		"time": 1,
 	})
-	
-	await get_tree().create_timer(3).timeout
+	await get_tree().create_timer(2).timeout
 	
 	bob.set_control({"animation": "idle", "time": 5})
 	
-	steve.set_control({
-		"animation": "run",
-		"end_position": Vector3(-5, 1.142, 3),
-		"time": 3
-	})
-	
 	await get_tree().create_timer(3).timeout
 	
-	steve.set_control({"animation": "idle", "time": 5})
+	steve.set_control({"animation": "idle", "time": 2})
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
