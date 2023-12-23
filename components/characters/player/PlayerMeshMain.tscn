@@ -62,13 +62,13 @@ bone_name = "mixamorig_RightHand"
 bone_idx = 34
 
 [node name="sword" parent="Armature/Skeleton3D/BoneAttachment3D" index="0" instance=ExtResource("3_7176e")]
-transform = Transform3D(-2.18537e-06, -9.90518e-05, 50, -9.83068e-05, 50, 9.90518e-05, -50, -9.83068e-05, -2.18557e-06, 131.748, -11.5815, 3.39712)
+transform = Transform3D(-1.09269e-06, -4.95259e-05, 25, -4.91534e-05, 25, 4.95259e-05, -25, -4.91534e-05, -1.09278e-06, 59.8154, -3.0057, 3.39716)
 
 [node name="AttackHitbox" type="Area3D" parent="Armature/Skeleton3D/BoneAttachment3D/sword" index="1"]
 transform = Transform3D(1, 8.3131e-15, -3.55271e-15, 1.45794e-20, 1, 0, 0, 1.77636e-15, 1, 0, 0, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/BoneAttachment3D/sword/AttackHitbox" index="0"]
-transform = Transform3D(1, -1.56828e-14, 0, -1.61024e-15, 1, -1.98952e-13, -6.36646e-12, 0, 1, 0.00445271, 0.502381, 0.470004)
+transform = Transform3D(1, -1.56828e-14, 0, -1.61023e-15, 1, -2.5091e-13, -8.02913e-12, 0, 1, 0.00445247, 0.502381, 0.470004)
 shape = SubResource("BoxShape3D_xschg")
 
 [node name="attack_sound" type="AudioStreamPlayer" parent="Armature/Skeleton3D/BoneAttachment3D/sword" index="2"]
@@ -78,6 +78,5 @@ mix_target = 1
 
 [node name="intro_sound" type="AudioStreamPlayer" parent="Armature/Skeleton3D/BoneAttachment3D/sword" index="3"]
 stream = ExtResource("5_sxegq")
-autoplay = true
 
 [connection signal="body_entered" from="Armature/Skeleton3D/BoneAttachment3D/sword/AttackHitbox" to="." method="_on_attack_hitbox_body_entered"]

@@ -1,0 +1,14 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://ddy0g40jexo4f"]
+
+[resource]
+resource_name = "glass"
+transparency = 3
+alpha_hash_scale = 1.0
+alpha_antialiasing_mode = 0
+cull_mode = 2
+albedo_color = Color(1, 1, 1, 0.309804)
+metallic = 1.0
+roughness = 0.0
+subsurf_scatter_strength = 0.47
+refraction_enabled = true
+refraction_scale = -0.05

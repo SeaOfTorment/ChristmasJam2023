@@ -1,0 +1,7 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://cmw24brkhsgrf"]
+
+[resource]
+resource_name = "factory_celing"
+cull_mode = 2
+albedo_color = Color(0.72747, 0.560841, 0.906573, 1)
+roughness = 0.5

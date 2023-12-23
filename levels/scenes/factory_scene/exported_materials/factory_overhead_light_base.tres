@@ -1,0 +1,6 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://c6tw7fuegmjba"]
+
+[resource]
+resource_name = "factory_overhead_light_base"
+cull_mode = 2
+roughness = 0.5

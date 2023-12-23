@@ -1,0 +1,7 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://c68s1ova7x1rk"]
+
+[resource]
+resource_name = "convayer_base"
+cull_mode = 2
+albedo_color = Color(0.105849, 0.238186, 0.522719, 1)
+roughness = 0.5

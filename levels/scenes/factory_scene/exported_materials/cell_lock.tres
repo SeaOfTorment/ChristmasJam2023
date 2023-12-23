@@ -1,0 +1,7 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://qqdjv1m6kgsm"]
+
+[resource]
+resource_name = "cell_lock"
+cull_mode = 2
+albedo_color = Color(0.411084, 0.0499479, 0, 1)
+roughness = 0.5

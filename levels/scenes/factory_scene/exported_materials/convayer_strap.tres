@@ -1,0 +1,7 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://dy2ucuh0u1bku"]
+
+[resource]
+resource_name = "convayer_strap"
+cull_mode = 2
+albedo_color = Color(0.17935, 0.33831, 0.361939, 1)
+roughness = 0.5

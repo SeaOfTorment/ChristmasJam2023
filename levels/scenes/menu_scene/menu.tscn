@@ -10,7 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://dagfu4kuaj1db" path="res://levels/scenes/menu_scene/scene_landscape_inh.tscn" id="7_skmbg"]
 [ext_resource type="AudioStream" uid="uid://bbdsx3jvg6rt" path="res://sounds/menu_scene_theme.mp3" id="8_qyeu1"]
 [ext_resource type="Script" path="res://levels/scenes/menu_scene/scene_settings/Play Button.gd" id="9_aknkl"]
-[ext_resource type="PackedScene" uid="uid://cm8sfsfsxp802" path="res://main/Main.tscn" id="10_rl0pc"]
+[ext_resource type="PackedScene" uid="uid://c8gummc0ki1y4" path="res://levels/scenes/factory.tscn" id="11_pv8va"]
 
 [sub_resource type="Animation" id="Animation_gl05q"]
 length = 0.001
@@ -692,7 +692,7 @@ autoplay = true
 
 [node name="Play_Button" type="Node" parent="Scene_Settings"]
 script = ExtResource("9_aknkl")
-scene = ExtResource("10_rl0pc")
+scene = ExtResource("11_pv8va")
 
 [connection signal="animation_finished" from="AnimationPlayer" to="AnimationPlayer" method="_on_animation_finished"]
 [connection signal="pressed" from="CanvasLayer/Screen/HBoxContainer/menu_options/play" to="CanvasLayer/Screen/HBoxContainer/menu_options" method="_on_play_pressed"]

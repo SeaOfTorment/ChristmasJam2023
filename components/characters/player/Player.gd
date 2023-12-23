@@ -157,7 +157,7 @@ func _handle_hitbox_collision(body):
 	if (body.has_method("hit")):
 		var direction = body.global_position - global_position
 		direction.y += 1
-		body.hit(1, direction)
+		body.hit($"stats".weapon_dmg + $"passives".damage, direction)
 
 
 func _update_cd(delta):

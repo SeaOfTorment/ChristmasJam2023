@@ -1,0 +1,20 @@
+[gd_resource type="StandardMaterial3D" load_steps=5 format=3 uid="uid://dmmvkh88ae5o8"]
+
+[ext_resource type="Texture2D" uid="uid://kp2d860easfh" path="res://components/materials/redbrick/textures/redbricks2b.png" id="1_fuqs8"]
+[ext_resource type="Texture2D" uid="uid://d24qbfqfywfdy" path="res://components/materials/redbrick/textures/redbricks2b-ao2.png" id="2_5cufj"]
+[ext_resource type="Texture2D" uid="uid://7la0e82gqlym" path="res://components/materials/redbrick/textures/redbricks2b-height4b.png" id="3_b0mgh"]
+[ext_resource type="Texture2D" uid="uid://cjtd7ulm0cdtj" path="res://components/materials/redbrick/textures/redbricks2b-normal.png" id="4_q7m2n"]
+
+[resource]
+cull_mode = 2
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("1_fuqs8")
+normal_enabled = true
+normal_texture = ExtResource("4_q7m2n")
+ao_enabled = true
+ao_texture = ExtResource("2_5cufj")
+heightmap_scale = 1.0
+heightmap_texture = ExtResource("3_b0mgh")
+uv1_scale = Vector3(0.3, 0.3, 0.3)
+uv1_triplanar = true
+uv1_world_triplanar = true

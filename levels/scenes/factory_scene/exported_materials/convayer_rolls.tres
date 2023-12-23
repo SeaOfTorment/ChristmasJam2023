@@ -1,0 +1,7 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://egfr8t7hf4h5"]
+
+[resource]
+resource_name = "convayer_rolls"
+cull_mode = 2
+albedo_color = Color(0.304261, 0.737259, 0.79806, 1)
+roughness = 0.5
