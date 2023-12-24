@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dbsd5tejh3pdd"]
+
+[ext_resource type="PackedScene" uid="uid://cavqdwvfcivq4" path="res://components/prefabs/snowman.glb" id="1_ll732"]
+
+[node name="snowman" instance=ExtResource("1_ll732")]
+
+[node name="Cylinder" parent="." index="0"]
+transform = Transform3D(0.0815324, 0, -0.0119538, 0, 0.082404, 0, 0.0119538, 0, 0.0815324, 0, 0.813312, 0)

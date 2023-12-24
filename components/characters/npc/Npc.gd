@@ -118,7 +118,8 @@ var current_control = DEFAULT_CONTROL.duplicate()
 
 func _ready():
 	health = max_health
-	
+	$SubViewport/NpcHpOverhead.max_value = health
+	$SubViewport/NpcHpOverhead.value = health
 	$character_model.model = model
 	$character_model.cull_models()
 
@@ -204,6 +205,7 @@ func hit(incoming_damage, direction, source):
 		impact_timer = STUN_TIME
 	add_state(IMPACT)
 	health -= incoming_damage
+	$SubViewport/NpcHpOverhead.value = health
 	
 	killer = source
 	killer_timer = 10
@@ -270,6 +272,7 @@ func _check_for_death():
 		add_state(DEAD)
 		set_physics_process(false)
 		$CollisionShape3D.set_deferred("disabled", true)
+		$SubViewport/NpcHpOverhead.queue_free()
 		await get_tree().create_timer(2).timeout
 		#queue_free()
 

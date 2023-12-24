@@ -1,15 +1,17 @@
-[gd_scene load_steps=3 format=3 uid="uid://c0m8iat5ejgjc"]
+[gd_scene load_steps=4 format=3 uid="uid://c0m8iat5ejgjc"]
 
+[ext_resource type="Script" path="res://components/prefabs/presents_expire.gd" id="1_2nut1"]
 [ext_resource type="PackedScene" uid="uid://duuw031d7rwoa" path="res://components/prefabs/red_present.tscn" id="1_fnhcc"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_yipch"]
-size = Vector3(0.634033, 0.601196, 0.595947)
+size = Vector3(0.357117, 0.345627, 0.354614)
 
 [node name="RedPresRig" type="RigidBody3D"]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+script = ExtResource("1_2nut1")
 
 [node name="red_present" parent="." instance=ExtResource("1_fnhcc")]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00305176, 0.303522, 0.0133057)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00560585, 0.183925, 0.00061924)
 shape = SubResource("BoxShape3D_yipch")

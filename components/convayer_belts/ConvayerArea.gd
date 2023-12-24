@@ -13,7 +13,7 @@ func _process(delta):
 	var dv = transform.basis * Vector3(-1,0,0)
 	for i in bodies:
 		if i is RigidBody3D:
-			i.linear_velocity = dv * 0.25
+			i.linear_velocity = dv * 0.06
 			i.angular_velocity = Vector3(0, 0, 0)
 			#i.apply_central_impulse(dv * 0.01)
 		
