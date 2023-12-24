@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://donbj11sxy7w5"]
+
+[ext_resource type="Script" path="res://components/convayer_belts/ConvayerArea.gd" id="1_hxnnl"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jo65h"]
+
+[node name="ConvayerArea" type="Area3D"]
+script = ExtResource("1_hxnnl")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_jo65h")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

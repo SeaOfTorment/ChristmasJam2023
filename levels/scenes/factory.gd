@@ -1,7 +1,7 @@
 extends Node3D
 
-var red_gift = preload("res://levels/scenes/factory_scene/prefabs/red_present.tscn")
-var green_gift = preload("res://levels/scenes/factory_scene/prefabs/green_present.tscn")
+var red_gift = preload("res://components/prefabs/red_pres_rig.tscn")
+var green_gift = preload("res://components/prefabs/red_pres_rig.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
