@@ -1,6 +1,6 @@
 extends MeshInstance3D
 
-@onready var cam = $"../../../Player/CameraMount/SpringArm3D/Camera3D"
+@onready var cam = $"../../../Player/CameraMount"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -9,5 +9,5 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
-	if cam:
-		look_at(cam.get_parent().get_parent().global_position)
+	if cam and is_instance_valid(cam):
+		look_at(cam.global_position)

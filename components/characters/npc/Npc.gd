@@ -1,9 +1,11 @@
 extends CharacterBody3D
 
-enum { IDLE=0, RUN=1, LAND=2, FALL=3, JUMP=4, ATTACK=5, IMPACT=6}
+enum { IDLE=0, RUN=1, LAND=2, FALL=3, JUMP=4, ATTACK=5, IMPACT=6, DEAD=100}
 
 signal finish_control
+signal has_died
 
+const KILL_HEIGHT = -100
 const SPEED = 3.0
 const JUMP_VELOCITY = 6
 const SENSE_REDUCE = 0.5
@@ -23,7 +25,8 @@ const ANIMATION_MAP = {
 	JUMP: "Baked_FallingStart",
 	IMPACT: "Baked_Get-Hit",
 	ATTACK: "Baked_Attack_Weapon",
-	LAND: "Baked_FallingEnd"
+	LAND: "Baked_FallingEnd",
+	DEAD: "Baked_Death"
 }
 
 const ACTION_DATA = {
@@ -35,11 +38,22 @@ const ACTION_DATA = {
 	}
 }
 
+@export_enum("BlackSmithElf", "CookElf", "EmoElf", "EnchanterElf", "FriendlyElf", "RebelElf", "Reindeer", "SantaElf", "Yeti") var model
+@export var npc_name : String = "Elf"
+@export var text_lines : Array[String]
+@export var interactable : bool
+@export var max_health = 5
+@export var damage = 10
+
+var health
+var killer = self
+var killer_timer = 0
 
 @onready var hitbox = $betterAnim/Armature/Skeleton3D/BoneAttachment3D/sword/AttackHitbox
 
 @onready var mesh = $character_model
 @onready var animation = $character_model/AnimationPlayer
+
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -61,7 +75,7 @@ var active_cds = {
 	"basic_attack": 0
 }
 
-var curr_direction = Vector3(1, 0, 0)
+var curr_direction = Vector3(0, 0, 1)
 var curr_action = "basic_attack"
 var action_delta = 0
 
@@ -100,15 +114,28 @@ var current_control = DEFAULT_CONTROL.duplicate()
 @export var target_to_attack : CharacterBody3D
 @onready var nav_agent = $NavigationAgent3D
 
+
+func _ready():
+	health = max_health
+	
+	$character_model.model = model
+	$character_model.cull_models()
+
+
 #
 #	Interaction Functions
 #
 func on_interaction(source):
-	print("interacting with ", source)
+	print("interact!")
+	$CanvasLayer/TextBox.display_text(npc_name, text_lines)
 
 
 func get_interaction_text():
-	return "Talk to NPC"
+	return "Talk to " + npc_name
+
+
+func can_interact():
+	return interactable
 
 
 func _handle_ai(_delta):
@@ -126,7 +153,6 @@ func _handle_ai(_delta):
 	
 	look_at(next_path_position)
 	input["move_forward"] = true
-
 
 
 #
@@ -167,16 +193,20 @@ func _handle_hitbox_collision(body):
 		attack_hit_bodies.append(body)
 		var direction = (body.global_position - global_position).normalized()
 		direction.y = 0
-		body.hit(1, direction)
+		body.hit(damage, direction, self)
 
 
-func hit(damage, direction):
+func hit(incoming_damage, direction, source):
 	action_delta = 0
 	impact_dir = direction * BASE_KNOCKBACK
 	impact_dir.y = 0
 	if active_state != IMPACT:
 		impact_timer = STUN_TIME
 	add_state(IMPACT)
+	health -= incoming_damage
+	
+	killer = source
+	killer_timer = 10
 
 
 func _update_cd(delta):
@@ -192,6 +222,9 @@ func add_state(new_state):
 
 
 func _check_for_states(delta):
+	if active_state == DEAD:
+		add_state(DEAD)
+		return
 	if not is_on_floor():
 		add_state(FALL)
 		land_state_cd = LAND_TIME
@@ -224,10 +257,29 @@ func _state_update(state, _prev_state): #underscored to prevent error on unused 
 		animation.play("Baked_Idle")
 
 
+func _check_for_death():
+	if health <= 0 or position.y < KILL_HEIGHT:
+		if killer_timer > 0:
+			print("died to ", killer)
+		emit_signal("has_died")
+		add_state(DEAD)
+		set_physics_process(false)
+		$CollisionShape3D.set_deferred("disabled", true)
+		await get_tree().create_timer(2).timeout
+		#queue_free()
+
+
+
 #
 #	Game Updates
 #
 func _physics_process(delta):
+	if active_state == DEAD:
+		return
+	
+	killer_timer -= delta
+	_check_for_death()
+	
 	if being_controlled:
 		_handle_controller(delta)
 		return
@@ -236,7 +288,9 @@ func _physics_process(delta):
 		if (impact_timer - STUN_TIME > -0.01):
 			velocity = impact_dir
 	else:
-		if target_to_attack: _handle_ai(delta)
+		if target_to_attack and is_instance_valid(target_to_attack):
+			_handle_ai(delta)
+		
 		_update_cd(delta)
 		if hitbox: _handle_attack(delta)
 		

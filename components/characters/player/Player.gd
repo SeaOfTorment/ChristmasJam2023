@@ -1,9 +1,11 @@
 extends CharacterBody3D
 
-enum { IDLE=0, RUN=1, LAND=2, FALL=3, JUMP=4, ATTACK=5, IMPACT=6 }
+enum { IDLE=0, RUN=1, LAND=2, FALL=3, JUMP=4, ATTACK=5, IMPACT=6, DEAD=100}
 
 signal finish_control
+signal has_died
 
+const KILL_HEIGHT = -50
 const SPEED = 5.0
 const JUMP_VELOCITY = 6
 const SENSE_REDUCE = 0.5
@@ -24,7 +26,8 @@ const ANIMATION_MAP = {
 	JUMP: "jump",
 	IMPACT: "impact2",
 	ATTACK: "attack1",
-	LAND: "Land"
+	LAND: "Land",
+	DEAD: "death"
 }
 
 const ACTION_DATA = {
@@ -80,8 +83,11 @@ var land_state_cd = 0
 var impact_timer = 0
 var impact_dir = Vector3(0, 0, 0)
 
+
 #Game variables
 var hp
+var killer
+var killer_timer = 0.0
 
 #
 # Animation vars
@@ -175,7 +181,7 @@ func _check_interactables():
 			nearest = i
 			dist = nearest.global_position.distance_to(global_position)
 	
-	if dist < INTERACT_RANGE:
+	if dist < INTERACT_RANGE and nearest.can_interact():
 		show_interactable_ui(nearest)
 		nearest_interactable = nearest
 	else:
@@ -227,11 +233,11 @@ func _handle_hitbox_collision(body):
 		attack_hit_bodies.append(body)
 		var direction = (body.global_position - global_position).normalized()
 		direction.y = 0
-		body.hit(stats.weapon_dmg + passives.damage, direction)
+		body.hit(stats.weapon_dmg + passives.damage, direction, self)
 
 
 
-func hit(damage, direction):
+func hit(damage, direction, source):
 	action_delta = 0
 	impact_dir = direction * BASE_KNOCKBACK
 	impact_dir.y = 0
@@ -239,6 +245,9 @@ func hit(damage, direction):
 		impact_timer = STUN_TIME
 	add_state(IMPACT)
 	hp -= damage
+	
+	killer = source
+	killer_timer = 10
 
 
 func _update_cd(delta):
@@ -286,10 +295,28 @@ func _state_update(state, _prev_state): #underscored to prevent error on unused 
 		animation.play("idle")
 
 
+func _check_for_death():
+	if hp <= 0 or position.y < KILL_HEIGHT:
+		if killer_timer > 0:
+			if not is_instance_valid(killer):
+				killer = null
+			if killer:
+				print("died to ", killer)
+		emit_signal("has_died")
+		add_state(DEAD)
+		await get_tree().create_timer(2).timeout
+		#queue_free()
+
 #
 #	Game Updates
 #
 func _physics_process(delta):
+	if active_state == DEAD:
+		return
+	
+	killer_timer -= delta
+	_check_for_death()
+	
 	if being_controlled:
 		_handle_controller(delta)
 		return

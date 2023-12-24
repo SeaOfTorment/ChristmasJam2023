@@ -479,4 +479,35 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.92447, 0.813125, -8.3932)
 
 [node name="Npc" parent="." node_paths=PackedStringArray("target_to_attack") instance=ExtResource("9_5ij76")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.90106, 2.27577, -20.7502)
+model = 1
+damage = 40
 target_to_attack = NodePath("../Player")
+
+[node name="Npcs" type="Node3D" parent="."]
+
+[node name="Npc" parent="Npcs" instance=ExtResource("9_5ij76")]
+transform = Transform3D(0.252734, 4.2755e-16, 1.47856, 5.2318e-16, 1.5, -5.2318e-16, -1.47856, 6.03851e-16, 0.252734, -91.1883, 1.01113, -1.75029)
+model = 2
+npc_name = "Bob the Emo"
+text_lines = Array[String](["Why was I born..."])
+interactable = true
+
+[node name="Npc2" parent="Npcs" instance=ExtResource("9_5ij76")]
+transform = Transform3D(-0.422231, 0, 1.43935, 0, 1.5, 0, -1.43935, 0, -0.422231, -91.1883, 1.01113, 1.21327)
+model = 5
+npc_name = "Gummy the Rebel"
+text_lines = Array[String](["How dare he try to confine me here!"])
+interactable = true
+
+[node name="Npc3" parent="Npcs" instance=ExtResource("9_5ij76")]
+transform = Transform3D(-0.318497, 0, 1.4658, 0, 1.5, 0, -1.4658, 0, -0.318497, -91.1883, 1.01113, 4.98415)
+model = 1
+npc_name = "Steve the Failure"
+text_lines = Array[String](["All I wanted to try was a new recipe..."])
+interactable = true
+
+[node name="Npc4" parent="Npcs" instance=ExtResource("9_5ij76")]
+transform = Transform3D(0.00157081, 0, -1.5, 0, 1.5, 0, 1.5, 0, 0.00157081, 7.46988, 1.35855, 0.547315)
+model = 4
+text_lines = Array[String](["Santa's Dead what can we do!", "Who would do such a thing!", "You've got to help us!"])
+interactable = true

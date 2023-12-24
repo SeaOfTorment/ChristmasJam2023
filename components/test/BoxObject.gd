@@ -5,6 +5,6 @@ extends RigidBody3D
 func _ready():
 	pass # Replace with function body.
 
-func hit(_damage, direction): #underscored to prevent error on unused var
+func hit(_damage, direction, _source): #underscored to prevent error on unused var
 
 	apply_central_impulse(direction * 9)
