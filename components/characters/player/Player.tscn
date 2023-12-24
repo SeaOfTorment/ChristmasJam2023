@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://ggxqscmbpasw"]
+[gd_scene load_steps=17 format=3 uid="uid://ggxqscmbpasw"]
 
 [ext_resource type="Script" path="res://components/characters/player/Player.gd" id="1_73hjx"]
 [ext_resource type="PackedScene" uid="uid://di3bq3ovj0hxc" path="res://components/characters/player/PlayerMeshMain.tscn" id="2_g80cy"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://components/characters/player/StatsUI.gd" id="4_67qk3"]
 [ext_resource type="Script" path="res://components/characters/player/stats.gd" id="4_v0pd5"]
 [ext_resource type="Script" path="res://components/characters/player/ingame_settings.gd" id="6_6eppu"]
+[ext_resource type="Script" path="res://components/characters/player/GoldCounter.gd" id="7_hpc3u"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_wku1q"]
 radius = 0.500911
@@ -377,6 +378,32 @@ size_flags_vertical = 0
 text = "Mute"
 icon_alignment = 1
 expand_icon = true
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 1030.0
+offset_right = 1152.0
+offset_bottom = 47.0
+script = ExtResource("7_hpc3u")
+
+[node name="Label" type="Label" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 11.0
+offset_right = 52.0
+offset_bottom = 48.0
+text = "Gold:
+"
+
+[node name="GoldCount" type="Label" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_left = 51.0
+offset_top = 12.0
+offset_right = 91.0
+offset_bottom = 35.0
+text = "0
+"
 
 [node name="passives" type="Node" parent="."]
 script = ExtResource("3_cne6h")

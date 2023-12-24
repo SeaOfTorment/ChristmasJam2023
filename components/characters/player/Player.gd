@@ -122,7 +122,7 @@ func _ready():
 #	Input Monitoring
 #
 func _input(event):
-	if mouse_lock and event is InputEventMouseMotion:
+	if active_state != DEAD and mouse_lock and event is InputEventMouseMotion:
 		rotate_y(deg_to_rad(-event.relative.x * mouse_sens_x * SENSE_REDUCE))
 		camera_mount.rotate_x(deg_to_rad(-event.relative.y * mouse_sens_y * SENSE_REDUCE))
 		camera_mount.rotation.x = clamp(camera_mount.rotation.x, deg_to_rad(-90), deg_to_rad(90))
