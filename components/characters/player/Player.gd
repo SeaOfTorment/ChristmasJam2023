@@ -1,6 +1,6 @@
 extends CharacterBody3D
 
-enum { IDLE=0, RUN=1, LAND=2, FALL=3, JUMP=4, ATTACK=5, IMPACT=6, DEAD=100}
+enum { IDLE=0, RUN=1, LAND=2, FALL=3, JUMP=4, ATTACK=5, IMPACT=6, DEAD=100, NOT_DEAD=101}
 
 signal finish_control
 signal has_died(dead, killer)
@@ -123,6 +123,8 @@ func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	_update_stats()
 	hp = max_health
+	
+	$CanvasLayer/DeathUI.hide()
 
 
 #
@@ -337,8 +339,22 @@ func _check_for_death():
 				print("died to ", killer)
 		has_died.emit(self, killer)
 		add_state(DEAD)
+		player_vars.death_count += 1
 		await get_tree().create_timer(2).timeout
+		$CanvasLayer/DeathUI.show_death()
 		#queue_free()
+
+
+func respawn():
+	var spawn_point = get_tree().get_first_node_in_group("spawn_points")
+	
+	if spawn_point:
+		global_position = spawn_point.global_position
+	else:
+		print("no spawn point!")
+	active_state = IDLE
+	add_state(NOT_DEAD)
+	hp = max_health / 2
 
 
 #

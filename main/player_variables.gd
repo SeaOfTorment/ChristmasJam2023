@@ -1,5 +1,6 @@
 extends Node
 
+var death_count = 0
 
 var current_upgrade = -1
 var gold = 2000

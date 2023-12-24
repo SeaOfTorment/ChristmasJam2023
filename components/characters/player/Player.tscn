@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://ggxqscmbpasw"]
+[gd_scene load_steps=16 format=3 uid="uid://ggxqscmbpasw"]
 
 [ext_resource type="Script" path="res://components/characters/player/Player.gd" id="1_73hjx"]
 [ext_resource type="PackedScene" uid="uid://di3bq3ovj0hxc" path="res://components/characters/player/PlayerMeshMain.tscn" id="2_g80cy"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://components/characters/player/StatsUI.gd" id="4_67qk3"]
 [ext_resource type="Script" path="res://components/characters/player/ingame_settings.gd" id="6_6eppu"]
 [ext_resource type="Script" path="res://components/characters/player/GoldCounter.gd" id="7_hpc3u"]
+[ext_resource type="PackedScene" uid="uid://c6ldji7tlse3c" path="res://ui/misc/Death.tscn" id="7_rqv33"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_wku1q"]
 radius = 0.500911
@@ -374,6 +375,13 @@ size_flags_vertical = 0
 text = "Mute"
 icon_alignment = 1
 expand_icon = true
+
+[node name="DeathUI" parent="CanvasLayer" node_paths=PackedStringArray("player") instance=ExtResource("7_rqv33")]
+offset_left = 404.0
+offset_top = 218.0
+offset_right = 404.0
+offset_bottom = 218.0
+player = NodePath("../..")
 
 [node name="Control" type="Control" parent="CanvasLayer"]
 layout_mode = 3
