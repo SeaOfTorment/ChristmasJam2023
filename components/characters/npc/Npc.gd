@@ -32,8 +32,8 @@ const ANIMATION_MAP = {
 const ACTION_DATA = {
 	"basic_attack": {
 		"time": 1.7,
-		"impact_start": 0.4,
-		"impact_end": 0.7,
+		"impact_start": 0.5,
+		"impact_end": 1.6,
 		"cd": 1.8,
 	}
 }
@@ -49,7 +49,7 @@ var health
 var killer = self
 var killer_timer = 0
 
-@onready var hitbox = $Area3D
+@onready var hitbox = $betterAnim/Armature/Skeleton3D/BoneAttachment3D/sword/AttackHitbox
 
 @onready var mesh = $character_model
 @onready var animation = $character_model/AnimationPlayer
@@ -325,7 +325,6 @@ func _update_player_direction(local_dir):
 		curr_direction = temp
 	
 	mesh.transform = mesh.transform.interpolate_with(mesh.transform.looking_at(curr_direction * -10), 0.2)
-	hitbox.transform = mesh.transform
 
 
 #
