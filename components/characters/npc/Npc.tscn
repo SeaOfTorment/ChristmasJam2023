@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://dis5xuhvijuh"]
 
 [ext_resource type="Script" path="res://components/characters/npc/Npc.gd" id="1_dd1up"]
-[ext_resource type="PackedScene" uid="uid://dlo1nuyilxgjb" path="res://components/characters/npc/npc_hp_overhead.tscn" id="2_6h48s"]
+[ext_resource type="PackedScene" path="res://components/characters/npc/npc_hp_overhead.tscn" id="2_6h48s"]
 [ext_resource type="PackedScene" uid="uid://can4b1yjl3w0r" path="res://assets/character/character_model.tscn" id="4_6qu3a"]
 [ext_resource type="PackedScene" uid="uid://da4d3o0ywep7l" path="res://ui/text_box/TextBox.tscn" id="4_tj7up"]
 
