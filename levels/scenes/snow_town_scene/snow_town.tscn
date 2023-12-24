@@ -1,0 +1,49 @@
+[gd_scene load_steps=6 format=3 uid="uid://b5jf1hd2k1hx5"]
+
+[ext_resource type="PackedScene" uid="uid://cb2s7ly4qanyf" path="res://levels/scenes/snow_town_scene/snow_town.glb" id="1_tm8w5"]
+[ext_resource type="PackedScene" uid="uid://ggxqscmbpasw" path="res://components/characters/player/Player.tscn" id="2_mljpx"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_727ql"]
+
+[sub_resource type="Sky" id="Sky_o3ygv"]
+sky_material = SubResource("ProceduralSkyMaterial_727ql")
+
+[sub_resource type="Environment" id="Environment_mv03m"]
+background_mode = 2
+background_energy_multiplier = 0.6
+sky = SubResource("Sky_o3ygv")
+ambient_light_source = 3
+reflected_light_source = 2
+tonemap_mode = 3
+ssr_enabled = true
+ssao_enabled = true
+ssao_radius = 2.94
+ssil_enabled = true
+ssil_radius = 16.0
+ssil_intensity = 4.57
+sdfgi_enabled = true
+sdfgi_use_occlusion = true
+glow_enabled = true
+glow_normalized = true
+glow_intensity = 1.0
+glow_strength = 0.54
+glow_bloom = 0.2
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.02
+volumetric_fog_albedo = Color(0.490196, 0.490196, 0.490196, 1)
+volumetric_fog_sky_affect = 0.24
+
+[node name="SnowTown" type="Node3D"]
+
+[node name="snow_town" parent="." instance=ExtResource("1_tm8w5")]
+transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, 0, 0, 0)
+
+[node name="Player" parent="." instance=ExtResource("2_mljpx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.8328, 13.0179, -21.4854)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.390924, 0.677721, 0.622794, 0.294659, -0.733177, 0.612884, 0.871983, -0.0560791, -0.486313, 0, 6.31596, -10.6181)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_mv03m")

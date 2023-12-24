@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://bmix5fkeb8hd"]
+
+[ext_resource type="PackedScene" uid="uid://cb2s7ly4qanyf" path="res://levels/scenes/snow_town_scene/snow_town.glb" id="1_p1pxa"]
+
+[node name="snow_town" instance=ExtResource("1_p1pxa")]

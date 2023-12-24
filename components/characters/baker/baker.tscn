@@ -1,0 +1,26 @@
+[gd_scene load_steps=6 format=3 uid="uid://b3isr7rldce32"]
+
+[ext_resource type="Script" path="res://components/characters/baker/baker.gd" id="1_scskf"]
+[ext_resource type="PackedScene" uid="uid://can4b1yjl3w0r" path="res://assets/character/character_model.tscn" id="2_a0vcu"]
+[ext_resource type="PackedScene" uid="uid://cwlvmks21182w" path="res://ui/upgrades/baker.tscn" id="3_fjtmw"]
+[ext_resource type="Script" path="res://ui/upgrades/baker.gd" id="4_a72q6"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_wku1q"]
+radius = 0.3
+
+[node name="baker" type="CharacterBody3D" groups=["interactables"]]
+script = ExtResource("1_scskf")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_wku1q")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+
+[node name="character_model" parent="." instance=ExtResource("2_a0vcu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.959385, 0)
+model = 1
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="baker" parent="CanvasLayer" instance=ExtResource("3_fjtmw")]
+script = ExtResource("4_a72q6")

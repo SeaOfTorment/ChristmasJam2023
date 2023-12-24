@@ -102,19 +102,19 @@ var current_control = DEFAULT_CONTROL.duplicate()
 @onready var nav_agent = $NavigationAgent3D
 
 func _ready():
-	$"CanvasLayer/BlackSmith".player = player
+	$"CanvasLayer/EnchanterUI".player = player
 
 #
 #	Black Smith Functions
 #
 func on_interaction(source):
-	$CanvasLayer/BlackSmith.show()
+	$CanvasLayer/EnchanterUI.show()
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	print("interactwing with ", source)
 
 
 func get_interaction_text():
-	return "Talk to blacksmith elf"
+	return "Talk to enchanter elf"
 
 
 func can_interact():

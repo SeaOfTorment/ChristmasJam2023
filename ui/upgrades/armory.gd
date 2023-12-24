@@ -43,15 +43,15 @@ const RANGE = {
 @onready var cost_label = $Panel/VBoxContainer/HBoxContainer3/MarginContainer2/Label
 @onready var dmg_label = $Panel/VBoxContainer/HBoxContainer2/MarginContainer2/Label
 @onready var as_label = $Panel/VBoxContainer/HBoxContainer2/MarginContainer3/Label2
-
 var player = null
 var next_upgrade = 0
 var rolling_cost_cal = 0
+var rolling_dmg_cal = 0
+var rolling_as_cal = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	rolling_cost_cal = cost(next_upgrade)
-	
 	
 	render_weapon_stats2()
 	hide()
@@ -81,10 +81,9 @@ func render_weapon_stats():
 	attribute_label.text = w_labels
 	
 func render_weapon_stats2():
-	name_label.text = "Food" + " MK: " + str(int_to_roman(next_upgrade+1))
+	name_label.text = "Vitality" + " MK: " + str(int_to_roman(next_upgrade+1))
 	cost_label.text = "Cost: " + str(rolling_cost_cal)
-	dmg_label.text = "DMG: +" + str(attack_boost(next_upgrade))
-	as_label.text = "Attack Speed: +" + str(attack_speed_boost(next_upgrade)).pad_decimals(2)
+	dmg_label.text = "Bonus health: +" + "10 HP"
 	
 func int_to_roman(num: int) -> String:
 	var result: String = ""
@@ -103,11 +102,10 @@ func upgrade():
 	if player_vars.gold >= rolling_cost_cal: # condition
 		#UPGRADE
 		
-		player_vars.base_attack += attack_boost(next_upgrade)
-		player_vars.base_attack_speed += attack_speed_boost(next_upgrade)
-		player_vars.gold -= rolling_cost_cal
-		next_upgrade += 1
+		player_vars.base_health += 10
 		player_vars.current_upgrade += 1
+		next_upgrade += 1
+		player_vars.gold -= rolling_cost_cal
 		
 		rolling_cost_cal = cost(next_upgrade)
 		render_weapon_stats2()

@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://c1qigbiyr3npo"]
+
+[ext_resource type="Script" path="res://components/characters/enchanter/Enchanter.gd" id="1_eb3q6"]
+[ext_resource type="PackedScene" uid="uid://can4b1yjl3w0r" path="res://assets/character/character_model.tscn" id="2_w72bf"]
+[ext_resource type="PackedScene" uid="uid://bxog2qrqun4rv" path="res://ui/upgrades/EnchanterUI.tscn" id="3_lx3he"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_wku1q"]
+radius = 0.3
+
+[node name="Enchanter" type="CharacterBody3D" groups=["interactables"]]
+script = ExtResource("1_eb3q6")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_wku1q")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+
+[node name="character_model" parent="." instance=ExtResource("2_w72bf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.959385, 0)
+model = 3
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="EnchanterUI" parent="CanvasLayer" instance=ExtResource("3_lx3he")]

@@ -22,7 +22,3 @@ model = 0
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="BlackSmith" parent="CanvasLayer" instance=ExtResource("3_cefym")]
-offset_left = 267.0
-offset_top = 125.0
-offset_right = 267.0
-offset_bottom = 125.0

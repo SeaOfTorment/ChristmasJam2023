@@ -1,15 +1,15 @@
-[gd_scene load_steps=2 format=3 uid="uid://c0kkfa7aixwel"]
+[gd_scene load_steps=2 format=3 uid="uid://bxog2qrqun4rv"]
 
-[ext_resource type="Script" path="res://ui/upgrades/BlackSmithUI.gd" id="1_sxxc2"]
+[ext_resource type="Script" path="res://ui/upgrades/EnchanterUI.gd" id="1_i35k0"]
 
-[node name="BlackSmithUI" type="Control"]
+[node name="EnchanterUI" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_sxxc2")
+script = ExtResource("1_i35k0")
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1
@@ -86,12 +86,19 @@ theme_override_constants/margin_bottom = 12
 
 [node name="Label" type="Label" parent="Panel/VBoxContainer/HBoxContainer2/MarginContainer2"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 26
+theme_override_font_sizes/font_size = 21
 text = "DMG: %s"
 
-[node name="MarginContainer" type="MarginContainer" parent="Panel/VBoxContainer/HBoxContainer2"]
+[node name="MarginContainer4" type="MarginContainer" parent="Panel/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
-size_flags_horizontal = 3
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer/HBoxContainer2/MarginContainer4"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 21
+text = "Movement: %s"
 
 [node name="MarginContainer3" type="MarginContainer" parent="Panel/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
@@ -100,7 +107,7 @@ theme_override_constants/margin_bottom = 12
 
 [node name="Label2" type="Label" parent="Panel/VBoxContainer/HBoxContainer2/MarginContainer3"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 26
+theme_override_font_sizes/font_size = 21
 text = "Attack Speed: %s"
 
 [node name="Button" type="Button" parent="Panel/VBoxContainer"]

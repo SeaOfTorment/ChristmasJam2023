@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://btri3lcc0ksso"]
+
+[ext_resource type="Script" path="res://components/characters/armory/armory.gd" id="1_550i0"]
+[ext_resource type="PackedScene" uid="uid://can4b1yjl3w0r" path="res://assets/character/character_model.tscn" id="2_atsv2"]
+[ext_resource type="PackedScene" uid="uid://diuqlj72hoohn" path="res://ui/upgrades/armory.tscn" id="3_xkdfl"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_wku1q"]
+radius = 0.3
+
+[node name="armory" type="CharacterBody3D" groups=["interactables"]]
+script = ExtResource("1_550i0")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_wku1q")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+
+[node name="character_model" parent="." instance=ExtResource("2_atsv2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.959385, 0)
+model = 0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="armory" parent="CanvasLayer" instance=ExtResource("3_xkdfl")]
