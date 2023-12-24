@@ -3,7 +3,7 @@ extends Node
 var death_count = 0
 
 var current_upgrade = -1
-var gold = 2000
+var gold = 0
 var weapon = "Candy cane sword"
 
 var kill_count = 0
