@@ -605,3 +605,17 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.69538, 1.40669, 10.2278)
 
 [node name="armory" parent="." instance=ExtResource("14_dj40h")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.633, 1.56864, 14.1002)
+[node name="Spawner2" parent="." node_paths=PackedStringArray("target_to_attack") instance=ExtResource("12_3igrc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.354, 0, 18.4341)
+spawn_rate = 0.5
+capacity = 20
+target_to_attack = NodePath("../Player")
+
+[node name="Spawner" parent="." node_paths=PackedStringArray("target_to_attack") instance=ExtResource("12_3igrc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.7354, -3.383, 0)
+spawn_rate = 0.5
+capacity = 20
+target_to_attack = NodePath("../Player")
+
+[node name="SpawnPoint" type="Marker3D" parent="." groups=["spawn_points"]]
+transform = Transform3D(0.431787, 0, -0.901976, 0, 1, 0, 0.901976, 0, 0.431787, -95.8832, 2.80701, 1.85532)

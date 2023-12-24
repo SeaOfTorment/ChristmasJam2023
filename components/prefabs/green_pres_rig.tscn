@@ -1,11 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://pj0m8lpigefr"]
+[gd_scene load_steps=4 format=3 uid="uid://pj0m8lpigefr"]
 
+[ext_resource type="Script" path="res://components/prefabs/presents_expire.gd" id="1_6161n"]
 [ext_resource type="PackedScene" uid="uid://ddgkyc0pslgax" path="res://components/prefabs/green_present.tscn" id="1_hi8e0"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_42doh"]
 size = Vector3(0.311447, 0.295921, 0.354614)
 
 [node name="GreenPresRig" type="RigidBody3D"]
+script = ExtResource("1_6161n")
 
 [node name="green_present" parent="." instance=ExtResource("1_hi8e0")]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)

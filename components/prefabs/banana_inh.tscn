@@ -1,4 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://5bsk8hdkhfb0"]
+[gd_scene load_steps=7 format=3 uid="uid://5bsk8hdkhfb0"]
+
+[ext_resource type="Script" path="res://components/prefabs/presents_expire.gd" id="1_37qsw"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u62ls"]
 resource_name = "Material.029"
@@ -74,6 +76,7 @@ shadow_mesh = SubResource("ArrayMesh_rrbuk")
 size = Vector3(0.311447, 0.295921, 0.354614)
 
 [node name="banana2" type="RigidBody3D"]
+script = ExtResource("1_37qsw")
 
 [node name="banana" type="MeshInstance3D" parent="."]
 transform = Transform3D(-3.87218e-09, 0.0885852, 0, -0.0885852, -3.87218e-09, 0, 0, 0, 0.0885852, -0.0849614, 0.188145, 0)

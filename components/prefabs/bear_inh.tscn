@@ -1,4 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://rsfl8xbgwc8r"]
+[gd_scene load_steps=7 format=3 uid="uid://rsfl8xbgwc8r"]
+
+[ext_resource type="Script" path="res://components/prefabs/presents_expire.gd" id="1_rj2vc"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_le3q7"]
 resource_name = "Material.030"
@@ -74,6 +76,7 @@ shadow_mesh = SubResource("ArrayMesh_a7a46")
 size = Vector3(0.311447, 0.295921, 0.354614)
 
 [node name="bear" type="RigidBody3D"]
+script = ExtResource("1_rj2vc")
 
 [node name="Sphere_009" type="MeshInstance3D" parent="."]
 transform = Transform3D(-0.051, -1.07708e-08, -4.43408e-08, 7.21605e-09, 0.0706251, -0.0375779, 2.818e-08, -0.0375779, -0.0706251, 0, -0.0602703, 0.192457)

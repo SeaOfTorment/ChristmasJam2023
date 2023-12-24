@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://b2hetn0yxufj7"]
+
+[ext_resource type="Script" path="res://ui/text_box/TextSequence.gd" id="1_hvdyn"]
+[ext_resource type="PackedScene" uid="uid://da4d3o0ywep7l" path="res://ui/text_box/TextBox.tscn" id="2_67yix"]
+
+[node name="TextSequence" type="CanvasLayer"]
+script = ExtResource("1_hvdyn")
+
+[node name="TextBox" parent="." instance=ExtResource("2_67yix")]
+
+[connection signal="done" from="TextBox" to="." method="finished"]

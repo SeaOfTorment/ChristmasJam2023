@@ -1,14 +1,13 @@
-[gd_scene load_steps=17 format=3 uid="uid://ggxqscmbpasw"]
+[gd_scene load_steps=16 format=3 uid="uid://ggxqscmbpasw"]
 
 [ext_resource type="Script" path="res://components/characters/player/Player.gd" id="1_73hjx"]
 [ext_resource type="PackedScene" uid="uid://di3bq3ovj0hxc" path="res://components/characters/player/PlayerMeshMain.tscn" id="2_g80cy"]
-[ext_resource type="Script" path="res://components/characters/player/passives.gd" id="3_cne6h"]
 [ext_resource type="PackedScene" uid="uid://o12e7owlm206" path="res://ui/interactable/InteractIndicator.tscn" id="3_sm7o5"]
 [ext_resource type="Script" path="res://levels/scenes/menu_scene/fps_counter.gd" id="4_7aekh"]
 [ext_resource type="Script" path="res://components/characters/player/StatsUI.gd" id="4_67qk3"]
-[ext_resource type="Script" path="res://components/characters/player/stats.gd" id="4_v0pd5"]
 [ext_resource type="Script" path="res://components/characters/player/ingame_settings.gd" id="6_6eppu"]
 [ext_resource type="Script" path="res://components/characters/player/GoldCounter.gd" id="7_hpc3u"]
+[ext_resource type="PackedScene" uid="uid://c6ldji7tlse3c" path="res://ui/misc/Death.tscn" id="7_rqv33"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_wku1q"]
 radius = 0.500911
@@ -79,7 +78,7 @@ offset_top = 459.0
 offset_right = 596.0
 offset_bottom = 459.0
 
-[node name="StatsUI" type="VBoxContainer" parent="CanvasLayer" node_paths=PackedStringArray("passives", "stats", "player")]
+[node name="StatsUI" type="VBoxContainer" parent="CanvasLayer" node_paths=PackedStringArray("player")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -90,8 +89,6 @@ offset_bottom = -2.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("4_67qk3")
-passives = NodePath("../../passives")
-stats = NodePath("../../stats")
 player = NodePath("../..")
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/StatsUI"]
@@ -379,6 +376,13 @@ text = "Mute"
 icon_alignment = 1
 expand_icon = true
 
+[node name="DeathUI" parent="CanvasLayer" node_paths=PackedStringArray("player") instance=ExtResource("7_rqv33")]
+offset_left = 404.0
+offset_top = 218.0
+offset_right = 404.0
+offset_bottom = 218.0
+player = NodePath("../..")
+
 [node name="Control" type="Control" parent="CanvasLayer"]
 layout_mode = 3
 anchors_preset = 0
@@ -404,12 +408,6 @@ offset_right = 91.0
 offset_bottom = 35.0
 text = "0
 "
-
-[node name="passives" type="Node" parent="."]
-script = ExtResource("3_cne6h")
-
-[node name="stats" type="Node" parent="."]
-script = ExtResource("4_v0pd5")
 
 [connection signal="pressed" from="CanvasLayer/settings_ui/HBoxContainer/Panel/VBoxContainer/visual" to="CanvasLayer/settings_ui" method="_on_visual_pressed"]
 [connection signal="pressed" from="CanvasLayer/settings_ui/HBoxContainer/Panel/VBoxContainer/audio" to="CanvasLayer/settings_ui" method="_on_audio_pressed"]

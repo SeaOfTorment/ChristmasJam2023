@@ -57,6 +57,8 @@ const ACTION_DATA = {
 @export var movement_speed = 1
 @export var attack_speed = 1
 
+@export var crazy : bool = false
+
 var health
 var killer = self
 var killer_timer = 0
@@ -136,6 +138,15 @@ func _ready():
 	$SubViewport/NpcHpOverhead.value = health
 	$character_model.model = model
 	$character_model.cull_models()
+	
+	if crazy:
+		add_to_group("crazies")
+		if (
+			not target_to_attack or 
+			not is_instance_valid(target_to_attack) or 
+			target_to_attack.active_state == DEAD
+			):
+			change_target()
 
 
 #
@@ -260,6 +271,19 @@ func _update_cd(delta):
 		active_cds[key] -= delta
 
 
+func loot(gold):
+	if crazy:
+		change_target()
+	pass
+
+
+func change_target():
+	var crazies = get_tree().get_nodes_in_group("crazies")
+	target_to_attack = crazies[randi() % crazies.size()]
+	detect_range = 100
+	
+
+
 #
 #	State Updates
 #
@@ -299,7 +323,13 @@ func _run_state_update():
 func _state_update(state, _prev_state): #underscored to prevent error on unused var
 	if state in ANIMATION_MAP:
 		animation.play(ANIMATION_MAP[state])
+		if state == ATTACK:
+			var a_data = ACTION_DATA["basic_attack"]
+			animation.speed_scale = animation.current_animation_length / (a_data["time"] / attack_speed)
+		else:
+			animation.speed_scale = 1
 	else:
+		animation.speed_scale = 1
 		animation.play("Baked_Idle")
 
 
@@ -313,6 +343,8 @@ func _check_for_death():
 					killer.loot(randi_range(loot_amount, loot_amount * 2))
 		has_died.emit(self, killer)
 		add_state(DEAD)
+		interactable = false
+		remove_from_group("crazies")
 		set_physics_process(false)
 		$CollisionShape3D.set_deferred("disabled", true)
 		$SubViewport/NpcHpOverhead.queue_free()
@@ -340,6 +372,13 @@ func _physics_process(delta):
 	else:
 		if target_to_attack and is_instance_valid(target_to_attack):
 			_handle_ai(delta)
+		elif (
+			crazy and (
+			not target_to_attack or 
+			not is_instance_valid(target_to_attack) or 
+			target_to_attack.active_state == DEAD
+			)):
+			change_target()
 		
 		_update_cd(delta)
 		if hitbox: _handle_attack(delta)

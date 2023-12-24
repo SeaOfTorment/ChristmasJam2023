@@ -1,5 +1,6 @@
 extends Control
 
+signal done
 
 var index = 0
 var lines = []
@@ -23,6 +24,7 @@ func show_line():
 	if index < lines.size():
 		$Content.text = lines[index]
 	else:
+		done.emit()
 		hide()
 
 func resize_font():

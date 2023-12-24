@@ -1,11 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://cw32e13mv402e"]
+[gd_scene load_steps=4 format=3 uid="uid://cw32e13mv402e"]
 
+[ext_resource type="Script" path="res://components/prefabs/presents_expire.gd" id="1_bn5m5"]
 [ext_resource type="PackedScene" uid="uid://dbsd5tejh3pdd" path="res://components/prefabs/snowman_inh.tscn" id="1_ypk24"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_hrk1v"]
 size = Vector3(0.357117, 0.329925, 0.354614)
 
 [node name="SnowmanRig" type="RigidBody3D"]
+script = ExtResource("1_bn5m5")
 
 [node name="snowman" parent="." instance=ExtResource("1_ypk24")]
 transform = Transform3D(-3.0598e-08, 0.7, 0, -0.7, -3.0598e-08, 0, 0, 0, 0.7, -0.284985, 0.191121, 0.00464749)
