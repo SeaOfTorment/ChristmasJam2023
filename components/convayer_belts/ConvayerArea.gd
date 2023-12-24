@@ -8,7 +8,7 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	var bodies = get_overlapping_bodies()
 	var dv = transform.basis * Vector3(-1,0,0)
 	for i in bodies:
@@ -18,11 +18,3 @@ func _process(delta):
 			#i.apply_central_impulse(dv * 0.01)
 		
 	get_overlapping_bodies()
-
-#-z
-func _on_body_entered(body):
-	#body.velocity.x += 1
-	pass
-
-func _on_body_exited(body):
-	pass # Replace with function body.

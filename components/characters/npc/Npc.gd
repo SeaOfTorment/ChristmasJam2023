@@ -1,7 +1,7 @@
 extends CharacterBody3D
 
 enum { IDLE=0, RUN=1, LAND=2, FALL=3, JUMP=4, ATTACK=5, IMPACT=6, DEAD=100}
-enum { AI_IDLE=0, AI_WANDER=1 }
+enum AI_STATE { AI_IDLE=0, AI_WANDER=1 }
 
 signal finish_control
 signal has_died(dead, killer)
@@ -129,7 +129,7 @@ var current_control = DEFAULT_CONTROL.duplicate()
 @onready var nav_agent = $NavigationAgent3D
 
 var ai_timer = 0
-var curr_ai_state = AI_IDLE
+var curr_ai_state = AI_STATE.AI_IDLE
 var wander_dir = DIRECTIONS[0]
 
 func _ready():
@@ -175,34 +175,36 @@ func _handle_ai(delta):
 		else:
 			_random_passive()
 		return
-	if dist < 3:
-		input["move_forward"] = false
-		input["attack"] = true
-		return
+
 	
 	input["attack"] = false
 	var next_path_position: Vector3 = nav_agent.get_next_path_position()
 	
 	next_path_position.y = global_position.y
 	
+	if dist < 3 or global_transform.origin.is_equal_approx(next_path_position):
+		input["move_forward"] = false
+		input["attack"] = true
+		return
+	
 	look_at(next_path_position)
 	input["move_forward"] = true
 
 
 func _random_passive():
-	curr_ai_state = randi() % 2
+	curr_ai_state = randi() % 2 as AI_STATE
 	match(curr_ai_state):
-		AI_IDLE:
+		AI_STATE.AI_IDLE:
 			ai_timer = 2
 			pass
-		AI_WANDER:
+		AI_STATE.AI_WANDER:
 			ai_timer = 1
 			wander_dir = DIRECTIONS[randi() % DIRECTIONS.size()]
 
 
 func _do_passive_ai(_delta):
 	match(curr_ai_state):
-		AI_WANDER:
+		AI_STATE.AI_WANDER:
 			look_at(global_position + wander_dir)
 			input["move_forward"] = true
 		_:
@@ -271,7 +273,7 @@ func _update_cd(delta):
 		active_cds[key] -= delta
 
 
-func loot(gold):
+func loot(_gold):
 	if crazy:
 		change_target()
 	pass

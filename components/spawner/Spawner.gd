@@ -96,6 +96,7 @@ func _process(delta):
 	var idx = spawnables[randi() % spawnables.size()]
 	var dat = NPC_DATA[idx]
 	
+	print("spawn")
 	var new_spawn = npcs.instantiate()
 	new_spawn.max_health = dat["health"] * spawner_level
 	new_spawn.damage = dat["damage"] * spawner_level
@@ -105,14 +106,15 @@ func _process(delta):
 	new_spawn.movement_speed = dat["ms"]
 	
 	new_spawn.has_died.connect(move_to_dead)
-	new_spawn.global_position = $Marker3D.global_position
+	new_spawn.position = $Marker3D.global_position
 	new_spawn.crazy = true
+	
 	if target_to_attack:
 		new_spawn.target_to_attack = target_to_attack
 	
 	alive_enemies.add_child(new_spawn)
 
 
-func move_to_dead(dead, killer):
+func move_to_dead(dead, _killer):
 	dead.reparent(dead_enemies)
 

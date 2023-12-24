@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cwlvmks21182w"]
 
-[ext_resource type="Script" path="res://ui/upgrades/BlackSmithUI.gd" id="1_yxkon"]
+[ext_resource type="Script" path="res://ui/upgrades/baker.gd" id="1_g63d0"]
 
 [node name="baker" type="Control"]
 layout_mode = 3
@@ -9,7 +9,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_yxkon")
+script = ExtResource("1_g63d0")
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1

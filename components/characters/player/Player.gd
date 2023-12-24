@@ -90,11 +90,11 @@ var hp
 var killer
 var killer_timer = 0.0
 
-var max_health = 100
-var attack_damage = 1
-var attack_speed = 1
-var movement_speed = 1
-var heal_rate = 1
+var max_health = 100.0
+var attack_damage = 1.0
+var attack_speed = 1.0
+var movement_speed = 1.0
+var heal_rate = 1.0
 
 #
 # Animation vars
@@ -354,7 +354,7 @@ func respawn():
 		print("no spawn point!")
 	active_state = IDLE
 	add_state(NOT_DEAD)
-	hp = max_health / 2
+	hp = max_health / 2.0
 
 
 #
