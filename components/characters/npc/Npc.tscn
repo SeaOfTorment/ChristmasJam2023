@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://dis5xuhvijuh"]
+[gd_scene load_steps=8 format=3 uid="uid://dis5xuhvijuh"]
 
 [ext_resource type="Script" path="res://components/characters/npc/Npc.gd" id="1_dd1up"]
+[ext_resource type="PackedScene" uid="uid://dlo1nuyilxgjb" path="res://components/characters/npc/npc_hp_overhead.tscn" id="2_6h48s"]
 [ext_resource type="PackedScene" uid="uid://can4b1yjl3w0r" path="res://assets/character/character_model.tscn" id="4_6qu3a"]
 [ext_resource type="PackedScene" uid="uid://da4d3o0ywep7l" path="res://ui/text_box/TextBox.tscn" id="4_tj7up"]
 
@@ -10,9 +11,18 @@ radius = 0.3
 [sub_resource type="BoxShape3D" id="BoxShape3D_fuqc7"]
 size = Vector3(1, 1, 0.5)
 
+[sub_resource type="ViewportTexture" id="ViewportTexture_p5d0k"]
+viewport_path = NodePath("SubViewport")
+
 [node name="Npc" type="CharacterBody3D" groups=["interactables"]]
 transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0)
 script = ExtResource("1_dd1up")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+transparent_bg = true
+
+[node name="NpcHpOverhead" parent="SubViewport" instance=ExtResource("2_6h48s")]
+value = 100.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.930355, 0)
@@ -38,5 +48,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.930355, 0)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.809259)
 shape = SubResource("BoxShape3D_fuqc7")
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.21722, 0)
+modulate = Color(1, 0.223529, 0.588235, 1)
+billboard = 1
+texture = SubResource("ViewportTexture_p5d0k")
 
 [connection signal="body_entered" from="Area3D" to="." method="_handle_hitbox_collision"]

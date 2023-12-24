@@ -32,44 +32,77 @@ transform = Transform3D(0.112799, 0, 0, 0, 2.48914, 0, 0, 0, 4.42513, 13.3528, 4
 surface_material_override/0 = ExtResource("4_c2xq4")
 surface_material_override/1 = ExtResource("3_gkhuw")
 
-[node name="cam_body1" parent="." index="46"]
+[node name="cam_body1" parent="." index="45"]
 script = ExtResource("12_5am3i")
 
-[node name="Plane_006" parent="." index="47"]
+[node name="Plane_006" parent="." index="46"]
+surface_material_override/1 = ExtResource("3_vjag6")
 surface_material_override/2 = ExtResource("4_okyuk")
 
-[node name="cam_body11" parent="." index="49"]
+[node name="cam_body11" parent="." index="48"]
 script = ExtResource("12_5am3i")
 
-[node name="cam_body21" parent="." index="51"]
+[node name="cam_body21" parent="." index="50"]
 script = ExtResource("12_5am3i")
 
-[node name="cam_body2_001" parent="." index="53"]
+[node name="cam_body2_001" parent="." index="52"]
 script = ExtResource("12_5am3i")
 
-[node name="cam_body2_002" parent="." index="55"]
+[node name="cam_body2_002" parent="." index="54"]
 script = ExtResource("12_5am3i")
 
-[node name="cam_body2_003" parent="." index="57"]
+[node name="cam_body2_003" parent="." index="56"]
 script = ExtResource("12_5am3i")
 
-[node name="cam_body2_004" parent="." index="59"]
+[node name="cam_body2_004" parent="." index="58"]
 script = ExtResource("12_5am3i")
 
-[node name="cam_body2_005" parent="." index="61"]
+[node name="cam_body2_005" parent="." index="60"]
 script = ExtResource("12_5am3i")
 
-[node name="cam_body2_006" parent="." index="63"]
+[node name="cam_body2_006" parent="." index="62"]
 script = ExtResource("12_5am3i")
 
-[node name="cam_body2_007" parent="." index="65"]
+[node name="SpotLight3D" type="SpotLight3D" parent="cam_body2_006" index="1"]
+transform = Transform3D(1.61999, 0, 0, 0, 4.5603, 0, 0, 0, 3.08875, 0, 0, -2.08009)
+light_color = Color(1, 0.32549, 0.172549, 1)
+light_energy = 11.669
+shadow_enabled = true
+spot_range = 60.21
+spot_angle = 18.39
+
+[node name="cam_body2_007" parent="." index="64"]
 script = ExtResource("12_5am3i")
 
-[node name="cam_body2_008" parent="." index="67"]
+[node name="SpotLight3D" type="SpotLight3D" parent="cam_body2_007" index="1"]
+transform = Transform3D(1.61999, 0, 0, 0, 4.5603, 0, 0, 0, 3.08875, 0, 0, -2.08009)
+light_color = Color(1, 0.32549, 0.172549, 1)
+light_energy = 11.669
+shadow_enabled = true
+spot_range = 60.21
+spot_angle = 18.39
+
+[node name="cam_body2_008" parent="." index="66"]
 script = ExtResource("12_5am3i")
 
-[node name="cam_body2_009" parent="." index="69"]
+[node name="SpotLight3D" type="SpotLight3D" parent="cam_body2_008" index="1"]
+transform = Transform3D(1.61999, 0, 0, 0, 4.5603, 0, 0, 0, 3.08875, 0, 0, -2.08009)
+light_color = Color(1, 0.32549, 0.172549, 1)
+light_energy = 11.669
+shadow_enabled = true
+spot_range = 60.21
+spot_angle = 18.39
+
+[node name="cam_body2_009" parent="." index="68"]
 script = ExtResource("12_5am3i")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="cam_body2_009" index="1"]
+transform = Transform3D(1.61999, 0, 0, 0, 4.5603, 0, 0, 0, 3.08875, 0, 0, -2.08009)
+light_color = Color(1, 0.32549, 0.172549, 1)
+light_energy = 11.669
+shadow_enabled = true
+spot_range = 60.21
+spot_angle = 18.39
 
 [node name="Sphere_005" parent="." index="75"]
 transform = Transform3D(0, 0.0744724, 9.51194e-09, -9.51194e-09, 4.4389e-09, -0.106389, -0.106389, 0, 6.34129e-09, 0.168648, 3.29079, 50.0579)
