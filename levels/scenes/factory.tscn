@@ -476,7 +476,6 @@ transform = Transform3D(0.14, 0, 0, 0, 0.14, 0, 0, 0, 0.14, -34.673, 6.4, -10.07
 [node name="Npc" parent="." node_paths=PackedStringArray("target_to_attack") instance=ExtResource("9_5ij76")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.90106, 2.27577, -20.7502)
 model = 1
-damage = 40
 target_to_attack = NodePath("../Player")
 
 [node name="Npcs" type="Node3D" parent="."]

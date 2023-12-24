@@ -44,6 +44,7 @@ const ACTION_DATA = {
 @export var interactable : bool
 @export var max_health = 5
 @export var damage = 10
+@export var loot = 1
 
 var health
 var killer = self
@@ -259,7 +260,12 @@ func _state_update(state, _prev_state): #underscored to prevent error on unused 
 func _check_for_death():
 	if health <= 0 or position.y < KILL_HEIGHT:
 		if killer_timer > 0:
-			print("died to ", killer)
+			if not is_instance_valid(killer):
+				killer = null
+			if killer:
+				if killer.has_method("loot"):
+					killer.loot(randi_range(loot, loot * 2))
+				print("died to ", killer)
 		emit_signal("has_died")
 		add_state(DEAD)
 		set_physics_process(false)
