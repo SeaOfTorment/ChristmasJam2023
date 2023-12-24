@@ -36,7 +36,3 @@ func _process(_delta):
 			passives.heal_rate
 			]
 		)
-
-
-func _on_check_button_toggled(toggled_on):
-	$"../../../WorldEnvironment".environment.sdfgi_enabled = toggled_on

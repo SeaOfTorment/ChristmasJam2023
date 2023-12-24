@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://b602e6nu4q1pj"]
+[gd_scene load_steps=10 format=3 uid="uid://b602e6nu4q1pj"]
 
 [ext_resource type="PackedScene" uid="uid://fleilc600n31" path="res://levels/scenes/factory_scene/santas_factory_scene.glb" id="1_llj75"]
 [ext_resource type="Material" uid="uid://wewey0cuwwtu" path="res://components/materials/used_stainless_steel/used_stainless_steal_alt.tres" id="2_wbjg7"]
 [ext_resource type="Material" uid="uid://dmmvkh88ae5o8" path="res://components/materials/redbrick/redbrick_alt1.tres" id="3_fvakt"]
 [ext_resource type="Material" uid="uid://dioulhtgkytub" path="res://levels/scenes/factory_scene/exported_materials/tv_screen.001.tres" id="3_gkhuw"]
+[ext_resource type="Material" uid="uid://djnvfg1ibpdff" path="res://components/materials/cobblestone/cobblestone.tres" id="3_vjag6"]
 [ext_resource type="Material" uid="uid://perubn4iqv0v" path="res://levels/scenes/factory_scene/exported_materials/tv_bevels.tres" id="4_c2xq4"]
 [ext_resource type="Material" uid="uid://d32351w0j6u2t" path="res://components/materials/futurism_metal/futurism_metal.tres" id="4_m1yr5"]
 [ext_resource type="Material" uid="uid://btlmdcujb7uo7" path="res://components/materials/wood/wood.tres" id="4_okyuk"]
@@ -13,6 +14,7 @@
 
 [node name="Plane" parent="." index="9"]
 surface_material_override/0 = ExtResource("2_wbjg7")
+surface_material_override/1 = ExtResource("3_vjag6")
 
 [node name="Cube" parent="." index="11"]
 surface_material_override/0 = ExtResource("3_fvakt")
