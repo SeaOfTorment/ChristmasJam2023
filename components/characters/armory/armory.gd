@@ -37,7 +37,7 @@ const ACTION_DATA = {
 
 @export var player: CharacterBody3D
 
-@onready var hitbox = $betterAnim/Armature/Skeleton3D/BoneAttachment3D/sword/AttackHitbox
+@onready var hitbox = null
 
 @onready var mesh = $character_model
 @onready var animation = $character_model/AnimationPlayer
@@ -180,7 +180,7 @@ func _handle_hitbox_collision(body):
 		body.hit(1, direction, self)
 
 
-func hit(damage, direction, source):
+func hit(_damage, direction, _source):
 	action_delta = 0
 	impact_dir = direction * BASE_KNOCKBACK
 	impact_dir.y = 0

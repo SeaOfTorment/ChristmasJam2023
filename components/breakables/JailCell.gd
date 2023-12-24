@@ -10,6 +10,17 @@ func _ready():
 	$Door.visible = false
 
 
+func on_interaction(source):
+	$CanvasLayer/TextBox.display_text("Jail Wall", ["It seems to be breakable... (It has " + str(health) + " health)"])
+
+
+func get_interaction_text():
+	return "look at door"
+
+
+func can_interact():
+	return not door_is_broken
+
 
 func break_door():
 	door_is_broken = true
@@ -22,16 +33,11 @@ func break_door():
 	queue_free()
 
 
-func hit(damage, direction, source):
+func hit(damage, _direction, _source):
 	print("breaking!!!")
 	
 	health -= damage
 	
 	if health <= 0:
 		break_door()
-	pass
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
 	pass

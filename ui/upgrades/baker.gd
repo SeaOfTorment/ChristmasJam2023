@@ -42,7 +42,7 @@ const RANGE = {
 @onready var attribute_label = $Attributes
 @onready var cost_label = $Panel/VBoxContainer/HBoxContainer3/MarginContainer2/Label
 @onready var dmg_label = $Panel/VBoxContainer/HBoxContainer2/MarginContainer2/Label
-@onready var as_label = $Panel/VBoxContainer/HBoxContainer2/MarginContainer3/Label2
+
 var player = null
 var next_upgrade = 0
 var rolling_cost_cal = 0
@@ -116,11 +116,6 @@ func upgrade():
 func exit():
 	hide()
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
 
 
 #
