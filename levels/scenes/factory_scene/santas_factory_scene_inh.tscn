@@ -6,8 +6,8 @@
 [ext_resource type="Material" uid="uid://dioulhtgkytub" path="res://levels/scenes/factory_scene/exported_materials/tv_screen.001.tres" id="3_gkhuw"]
 [ext_resource type="Material" uid="uid://djnvfg1ibpdff" path="res://components/materials/cobblestone/cobblestone.tres" id="3_vjag6"]
 [ext_resource type="Material" uid="uid://perubn4iqv0v" path="res://levels/scenes/factory_scene/exported_materials/tv_bevels.tres" id="4_c2xq4"]
-[ext_resource type="Material" uid="uid://d32351w0j6u2t" path="res://components/materials/futurism_metal/futurism_metal.tres" id="4_m1yr5"]
 [ext_resource type="Material" uid="uid://btlmdcujb7uo7" path="res://components/materials/wood/wood.tres" id="4_okyuk"]
+[ext_resource type="Material" uid="uid://d32351w0j6u2t" path="res://components/materials/futurism_metal/futurism_metal.tres" id="6_hl5tl"]
 [ext_resource type="Script" path="res://levels/scenes/factory_scene/cameras.gd" id="12_5am3i"]
 
 [node name="santas_factory_scene" instance=ExtResource("1_llj75")]
@@ -19,12 +19,24 @@ surface_material_override/1 = ExtResource("3_vjag6")
 [node name="Cube" parent="." index="11"]
 surface_material_override/0 = ExtResource("3_fvakt")
 
-[node name="Plane_001" parent="." index="18"]
+[node name="Cylinder" parent="." index="12"]
+material_override = ExtResource("4_okyuk")
+
+[node name="Cylinder_001" parent="." index="13"]
+surface_material_override/0 = ExtResource("4_okyuk")
+
+[node name="Cylinder_002" parent="." index="14"]
+surface_material_override/0 = ExtResource("4_okyuk")
+
+[node name="Cylinder_003" parent="." index="15"]
+surface_material_override/0 = ExtResource("4_okyuk")
+
+[node name="Plane_001-col" parent="." index="18"]
 surface_material_override/0 = ExtResource("3_fvakt")
-surface_material_override/3 = ExtResource("4_m1yr5")
+surface_material_override/3 = ExtResource("6_hl5tl")
 surface_material_override/5 = ExtResource("4_okyuk")
 
-[node name="Plane_003" parent="." index="19"]
+[node name="Plane_003-col" parent="." index="19"]
 surface_material_override/0 = ExtResource("4_okyuk")
 
 [node name="Cube_002" parent="." index="23"]
@@ -35,8 +47,9 @@ surface_material_override/1 = ExtResource("3_gkhuw")
 [node name="cam_body1" parent="." index="45"]
 script = ExtResource("12_5am3i")
 
-[node name="Plane_006" parent="." index="46"]
-surface_material_override/1 = ExtResource("3_vjag6")
+[node name="Plane_006-col" parent="." index="46"]
+surface_material_override/0 = ExtResource("3_fvakt")
+surface_material_override/1 = ExtResource("6_hl5tl")
 surface_material_override/2 = ExtResource("4_okyuk")
 
 [node name="cam_body11" parent="." index="48"]
@@ -104,8 +117,8 @@ shadow_enabled = true
 spot_range = 60.21
 spot_angle = 18.39
 
-[node name="Sphere_005" parent="." index="75"]
+[node name="Sphere_005" parent="." index="80"]
 transform = Transform3D(0, 0.0744724, 9.51194e-09, -9.51194e-09, 4.4389e-09, -0.106389, -0.106389, 0, 6.34129e-09, 0.168648, 3.29079, 50.0579)
 
-[node name="Sphere_001" parent="." index="76"]
+[node name="Sphere_001" parent="." index="81"]
 transform = Transform3D(0, -0.0744724, -9.51194e-09, -9.51194e-09, 4.4389e-09, -0.106389, 0.106389, 0, -1.26826e-08, -40.6729, 3.16057, -18.7796)

@@ -37,15 +37,24 @@ const RANGE = {
 	"heal_rate": [0, 1, 2]
 }
 
-@onready var name_label = $Name
+@onready var player_vars = get_node("/root/PlayerVariables")
+@onready var name_label = $Panel/VBoxContainer/HBoxContainer/MarginContainer2/Label
 @onready var attribute_label = $Attributes
+@onready var cost_label = $Panel/VBoxContainer/HBoxContainer3/MarginContainer2/Label
+@onready var dmg_label = $Panel/VBoxContainer/HBoxContainer2/MarginContainer2/Label
+@onready var as_label = $Panel/VBoxContainer/HBoxContainer2/MarginContainer3/Label2
 var player = null
-
 var next_upgrade = 0
+var rolling_cost_cal = 0
+var rolling_dmg_cal = 0
+var rolling_as_cal = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	render_weapon_stats()
+	#rolling_cost_cal = player_vars.current_upgrade+(3+abs(player_vars.current_upgrade))+1
+	#rolling_dmg_cal = player.stats.weapon_dmg * 1.35
+	#rolling_as_cal = player.stats.base_ms * 1.25
+	render_weapon_stats2()
 	hide()
 	pass # Replace with function body.
 
@@ -71,12 +80,32 @@ func render_weapon_stats():
 	w_labels = w_labels.left(-2)
 	
 	attribute_label.text = w_labels
+	
+func render_weapon_stats2():
+	name_label.text = "Weapon: " + player_vars.weapon + " MK: " + str(int_to_roman(player_vars.current_upgrade+3))
+	cost_label.text = rolling_cost_cal
+	dmg_label.text = rolling_dmg_cal
+	as_label.test = rolling_as_cal
+func int_to_roman(num: int) -> String:
+	var result: String = ""
+	var values: Array = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1]
+	var numerals: Array = ["M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"]
 
+	var i: int = 0
+	while num > 0:
+		while num >= values[i]:
+			result += numerals[i]
+			num -= values[i]
+		i += 1
+	return result
 
 func upgrade():
-	if true: # condition
+	if player_vars.gold >= rolling_cost_cal: # condition
 		next_upgrade += 1
-		render_weapon_stats()
+		#UPGRADE
+		render_weapon_stats2()
+		player.stats.weapon_dmg = rolling_dmg_cal
+		player.stats.base_as = rolling_as_cal
 
 
 func exit():
