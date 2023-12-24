@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://b5jf1hd2k1hx5"]
+[gd_scene load_steps=7 format=3 uid="uid://b5jf1hd2k1hx5"]
 
 [ext_resource type="PackedScene" uid="uid://cb2s7ly4qanyf" path="res://levels/scenes/snow_town_scene/snow_town.glb" id="1_tm8w5"]
 [ext_resource type="PackedScene" uid="uid://ggxqscmbpasw" path="res://components/characters/player/Player.tscn" id="2_mljpx"]
+[ext_resource type="PackedScene" uid="uid://0av5syrpl6r5" path="res://components/spawner/Spawner.tscn" id="3_xbc2j"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_727ql"]
 
@@ -47,3 +48,48 @@ shadow_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_mv03m")
+
+[node name="Spawner" parent="." instance=ExtResource("3_xbc2j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -75.3616, 30.9935, -0.335629)
+
+[node name="Spawner2" parent="." instance=ExtResource("3_xbc2j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -104.973, 32.807, 14.4124)
+
+[node name="Spawner3" parent="." instance=ExtResource("3_xbc2j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -104.973, 32.807, -33.5128)
+
+[node name="Spawner4" parent="." instance=ExtResource("3_xbc2j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -65.1016, 34.3609, -107.709)
+
+[node name="Spawner5" parent="." instance=ExtResource("3_xbc2j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -47.0273, 15.9309, -48.5557)
+
+[node name="Spawner6" parent="." instance=ExtResource("3_xbc2j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.551, 12.7197, -30.7189)
+
+[node name="Spawner7" parent="." instance=ExtResource("3_xbc2j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -97.1175, 32.6206, 17.2551)
+
+[node name="Spawner8" parent="." instance=ExtResource("3_xbc2j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -139.823, 32.6206, -39.0563)
+
+[node name="Spawner9" parent="." instance=ExtResource("3_xbc2j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -156.898, 36.7945, -37.2716)
+
+[node name="Spawner10" parent="." instance=ExtResource("3_xbc2j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -161.405, 36.7945, -37.2716)
+
+[node name="Spawner11" parent="." instance=ExtResource("3_xbc2j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -173.729, 36.7218, -33.3802)
+
+[node name="Spawner12" parent="." instance=ExtResource("3_xbc2j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -180.729, 36.7218, -19.4677)
+
+[node name="Spawner13" parent="." instance=ExtResource("3_xbc2j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -174.339, 36.7218, -19.4677)
+
+[node name="Spawner14" parent="." instance=ExtResource("3_xbc2j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -171.995, 35.5722, 6.65488)
+
+[node name="Spawner15" parent="." instance=ExtResource("3_xbc2j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -100.836, 14.503, 6.65488)
