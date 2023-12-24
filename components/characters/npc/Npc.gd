@@ -1,9 +1,10 @@
 extends CharacterBody3D
 
 enum { IDLE=0, RUN=1, LAND=2, FALL=3, JUMP=4, ATTACK=5, IMPACT=6, DEAD=100}
+enum { AI_IDLE=0, AI_WANDER=1 }
 
 signal finish_control
-signal has_died
+signal has_died(dead, killer)
 
 const KILL_HEIGHT = -100
 const SPEED = 3.0
@@ -17,6 +18,13 @@ const LAND_TIME = 0.2
 
 const BASE_KNOCKBACK = 10
 const STUN_TIME = 0.2
+
+const DIRECTIONS = [
+	Vector3(1, 0, 0),
+	Vector3(0, 0, 1),
+	Vector3(-1, 0, 0),
+	Vector3(0, 0, -1)
+]
 
 const ANIMATION_MAP = {
 	IDLE: "Baked_Idle",
@@ -44,7 +52,10 @@ const ACTION_DATA = {
 @export var interactable : bool
 @export var max_health = 5
 @export var damage = 10
-@export var loot = 1
+@export var loot_amount = 1
+@export var detect_range = 10
+@export var movement_speed = 1
+@export var attack_speed = 1
 
 var health
 var killer = self
@@ -115,6 +126,9 @@ var current_control = DEFAULT_CONTROL.duplicate()
 @export var target_to_attack : CharacterBody3D
 @onready var nav_agent = $NavigationAgent3D
 
+var ai_timer = 0
+var curr_ai_state = AI_IDLE
+var wander_dir = DIRECTIONS[0]
 
 func _ready():
 	health = max_health
@@ -127,7 +141,7 @@ func _ready():
 #
 #	Interaction Functions
 #
-func on_interaction(source):
+func on_interaction(_source):
 	$CanvasLayer/TextBox.display_text(npc_name, text_lines)
 
 
@@ -139,10 +153,18 @@ func can_interact():
 	return interactable
 
 
-func _handle_ai(_delta):
+func _handle_ai(delta):
+	ai_timer -= delta
 	nav_agent.target_position = target_to_attack.position
 	
-	if (nav_agent.target_position - position).length_squared() < 3:
+	var dist = (nav_agent.target_position - global_position).length_squared()
+	if dist > detect_range * detect_range:
+		if ai_timer > 0:
+			_do_passive_ai(delta)
+		else:
+			_random_passive()
+		return
+	if dist < 3:
 		input["move_forward"] = false
 		input["attack"] = true
 		return
@@ -150,11 +172,30 @@ func _handle_ai(_delta):
 	input["attack"] = false
 	var next_path_position: Vector3 = nav_agent.get_next_path_position()
 	
-	next_path_position.y = position.y
+	next_path_position.y = global_position.y
 	
 	look_at(next_path_position)
 	input["move_forward"] = true
 
+
+func _random_passive():
+	curr_ai_state = randi() % 2
+	match(curr_ai_state):
+		AI_IDLE:
+			ai_timer = 2
+			pass
+		AI_WANDER:
+			ai_timer = 1
+			wander_dir = DIRECTIONS[randi() % DIRECTIONS.size()]
+
+
+func _do_passive_ai(_delta):
+	match(curr_ai_state):
+		AI_WANDER:
+			look_at(global_position + wander_dir)
+			input["move_forward"] = true
+		_:
+			input["move_forward"] = false
 
 #
 #	Handle Attack
@@ -164,8 +205,8 @@ func attack(type = "basic_attack"):
 	attack_hit_bodies = []
 	add_state(ATTACK)
 	curr_action = type
-	action_delta = ACTION_DATA[curr_action]["time"]
-	active_cds[curr_action] = ACTION_DATA[curr_action]["cd"]
+	action_delta = ACTION_DATA[curr_action]["time"] / attack_speed
+	active_cds[curr_action] = ACTION_DATA[curr_action]["cd"] / attack_speed
 
 
 func _handle_attack(delta):
@@ -176,9 +217,12 @@ func _handle_attack(delta):
 	add_state(ATTACK)
 	
 	var a_data = ACTION_DATA[curr_action]
-	var t = a_data["time"] - action_delta
+	var t = a_data["time"] / attack_speed - action_delta
 	
-	if t >= a_data["impact_start"] and t <= a_data["impact_end"]:
+	if (
+		t >= a_data["impact_start"] / attack_speed and 
+		t <= a_data["impact_end"] / attack_speed
+		):
 		hitbox.monitoring = true
 	else:
 		hitbox.monitoring = false
@@ -266,14 +310,12 @@ func _check_for_death():
 				killer = null
 			if killer:
 				if killer.has_method("loot"):
-					killer.loot(randi_range(loot, loot * 2))
-				print("died to ", killer)
-		emit_signal("has_died")
+					killer.loot(randi_range(loot_amount, loot_amount * 2))
+		has_died.emit(self, killer)
 		add_state(DEAD)
 		set_physics_process(false)
 		$CollisionShape3D.set_deferred("disabled", true)
 		$SubViewport/NpcHpOverhead.queue_free()
-		await get_tree().create_timer(2).timeout
 		#queue_free()
 
 
@@ -308,8 +350,8 @@ func _physics_process(delta):
 		var dir = transform.basis * local_dir
 		_update_player_direction(local_dir)
 		
-		velocity.x = dir.x * SPEED
-		velocity.z = dir.z * SPEED
+		velocity.x = dir.x * SPEED * movement_speed
+		velocity.z = dir.z * SPEED * movement_speed
 		
 		if not is_on_floor():
 			velocity.y -= gravity * delta
