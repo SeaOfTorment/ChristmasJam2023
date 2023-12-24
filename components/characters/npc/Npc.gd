@@ -299,7 +299,13 @@ func _run_state_update():
 func _state_update(state, _prev_state): #underscored to prevent error on unused var
 	if state in ANIMATION_MAP:
 		animation.play(ANIMATION_MAP[state])
+		if state == ATTACK:
+			var a_data = ACTION_DATA["basic_attack"]
+			animation.speed_scale = animation.current_animation_length / (a_data["time"] / attack_speed)
+		else:
+			animation.speed_scale = 1
 	else:
+		animation.speed_scale = 1
 		animation.play("Baked_Idle")
 
 

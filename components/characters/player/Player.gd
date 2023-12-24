@@ -19,6 +19,8 @@ const LAND_TIME = 0.2
 const BASE_KNOCKBACK = 10
 const STUN_TIME = 0.2
 
+const HEAL_TIME = 5
+
 const ANIMATION_MAP = {
 	IDLE: "idle",
 	RUN: "run",
@@ -44,9 +46,6 @@ const ACTION_DATA = {
 
 @onready var mesh = $betterAnim
 @onready var animation = $betterAnim/AnimationPlayer
-
-@onready var stats = $stats
-@onready var passives = $passives
 
 var mouse_lock = true
 
@@ -80,6 +79,8 @@ var active_state = IDLE
 var jump_state_cd = 0
 var land_state_cd = 0
 
+var heal_timer = 0
+
 var impact_timer = 0
 var impact_dir = Vector3(0, 0, 0)
 
@@ -88,6 +89,12 @@ var impact_dir = Vector3(0, 0, 0)
 var hp
 var killer
 var killer_timer = 0.0
+
+var max_health = 100
+var attack_damage = 1
+var attack_speed = 1
+var movement_speed = 1
+var heal_rate = 1
 
 #
 # Animation vars
@@ -114,8 +121,8 @@ var nearest_interactable = null
 
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	var temp_stats = calc_stats()
-	hp = temp_stats["HP"]
+	_update_stats()
+	hp = max_health
 
 
 #
@@ -196,6 +203,18 @@ func show_interactable_ui(object):
 	$CanvasLayer/InteractIndicator/RichTextLabel.text = "E to " + object.get_interaction_text()
 	pass
 
+#
+#	Handle Healing
+#
+func _handle_heal(delta):
+	if heal_timer > 0:
+		heal_timer -= delta
+		return
+	
+	heal_timer = HEAL_TIME / heal_rate
+	hp += 1
+	hp = min(hp, max_health)
+
 
 #
 #	Handle Attack
@@ -205,8 +224,8 @@ func attack(type = "basic_attack"):
 	attack_hit_bodies = []
 	add_state(ATTACK)
 	curr_action = type
-	action_delta = ACTION_DATA[curr_action]["time"]
-	active_cds[curr_action] = ACTION_DATA[curr_action]["cd"]
+	action_delta = ACTION_DATA[curr_action]["time"] / attack_speed
+	active_cds[curr_action] = ACTION_DATA[curr_action]["cd"] / attack_speed
 
 
 func _handle_attack(delta):
@@ -217,9 +236,12 @@ func _handle_attack(delta):
 	add_state(ATTACK)
 	
 	var a_data = ACTION_DATA[curr_action]
-	var t = a_data["time"] - action_delta
+	var t = a_data["time"] / attack_speed - action_delta
 	
-	if t >= a_data["impact_start"] and t <= a_data["impact_end"]:
+	if (
+		t >= a_data["impact_start"]/ attack_speed and
+		t <= a_data["impact_end"] / attack_speed
+		):
 		hitbox.monitoring = true
 	else:
 		hitbox.monitoring = false
@@ -239,7 +261,7 @@ func _handle_hitbox_collision(body):
 		attack_hit_bodies.append(body)
 		var direction = (body.global_position - global_position).normalized()
 		direction.y = 0
-		body.hit(stats.weapon_dmg + passives.damage, direction, self)
+		body.hit(attack_damage, direction, self)
 
 
 func hit(damage, direction, source):
@@ -296,7 +318,13 @@ func _run_state_update():
 func _state_update(state, _prev_state): #underscored to prevent error on unused var
 	if state in ANIMATION_MAP:
 		animation.play(ANIMATION_MAP[state])
+		if state == ATTACK:
+			var a_data = ACTION_DATA["basic_attack"]
+			animation.speed_scale = animation.current_animation_length / (a_data["time"] / attack_speed)
+		else:
+			animation.speed_scale = 1
 	else:
+		animation.speed_scale = 1
 		animation.play("idle")
 
 
@@ -318,6 +346,7 @@ func _check_for_death():
 #
 func _physics_process(delta):
 	_handle_input()
+	_update_stats()
 	if !mouse_lock or active_state == DEAD:
 		return
 	
@@ -327,12 +356,13 @@ func _physics_process(delta):
 	if being_controlled:
 		_handle_controller(delta)
 		return
-	
+
 	
 	if active_state == IMPACT:
 		if (impact_timer - STUN_TIME > -0.01):
 			velocity = impact_dir
 	else:
+		_handle_heal(delta)
 		_update_cd(delta)
 		_handle_attack(delta)
 		_check_interactables()
@@ -343,8 +373,8 @@ func _physics_process(delta):
 		var dir = transform.basis * local_dir
 		_update_player_direction(local_dir)
 		
-		velocity.x = dir.x * SPEED
-		velocity.z = dir.z * SPEED
+		velocity.x = dir.x * SPEED * movement_speed
+		velocity.z = dir.z * SPEED * movement_speed
 		
 		if not is_on_floor():
 			velocity.y -= gravity * delta
@@ -369,6 +399,11 @@ func _update_player_direction(local_dir):
 	
 	mesh.transform = mesh.transform.interpolate_with(mesh.transform.looking_at(curr_direction * -10), 0.2)
 
+func _update_stats():
+	attack_damage = player_vars.base_attack * player_vars.bonus_attack
+	max_health = player_vars.base_health * player_vars.bonus_health
+	movement_speed = player_vars.base_movement * player_vars.bonus_movement
+	attack_speed = player_vars.base_attack_speed * player_vars.bonus_attack_speed
 
 #
 #	animation control
@@ -439,13 +474,4 @@ func get_cd(type = "basic_attack"):
 	return {
 		"active_cd": active_cds[type],
 		"cd": ACTION_DATA[type]["cd"]
-	}
-
-func calc_stats():
-	return {
-		"DM": stats.weapon_dmg + passives.damage,
-		"HP": stats.base_hp + passives.bonus_health,
-		"MS": stats.base_ms + passives.movement_speed,
-		"AS": stats.base_as + passives.attack_speed,
-		"HR": stats.base_heal_rate + passives.heal_rate,
 	}
