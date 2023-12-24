@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://cj6qpx5nd4wxx"]
+[gd_scene load_steps=7 format=3 uid="uid://cj6qpx5nd4wxx"]
 
 [ext_resource type="PackedScene" uid="uid://bewio44cvwuop" path="res://components/breakables/door.tscn" id="1_2kx73"]
 [ext_resource type="Script" path="res://components/breakables/JailCell.gd" id="1_287hg"]
 [ext_resource type="PackedScene" uid="uid://sj0tbivgf6po" path="res://components/breakables/NotBrokenDoor.glb" id="2_q88u6"]
 [ext_resource type="PackedScene" uid="uid://da4d3o0ywep7l" path="res://ui/text_box/TextBox.tscn" id="4_0w6rj"]
+[ext_resource type="AudioStream" uid="uid://26wdmv7tgr8x" path="res://sounds/zapsplat_impact_metal_pan_or_tray_thick_hit_resonate_move_107238.mp3" id="5_1t0x8"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_sc27i"]
 size = Vector3(0.2, 8, 5)
@@ -27,3 +28,6 @@ offset_top = 397.0
 offset_right = 237.0
 offset_bottom = 397.0
 metadata/_edit_use_anchors_ = true
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("5_1t0x8")

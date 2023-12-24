@@ -36,6 +36,7 @@ func break_door():
 func hit(damage, _direction, _source):
 	print("breaking!!!")
 	
+	$AudioStreamPlayer3D.play()
 	health -= damage
 	
 	if health <= 0:

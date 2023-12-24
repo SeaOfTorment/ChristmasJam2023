@@ -251,6 +251,7 @@ func _handle_attack(delta):
 
 func loot(gold):
 	player_vars.gold += gold
+	player_vars.kill_count += 1
 
 
 #
@@ -267,6 +268,7 @@ func _handle_hitbox_collision(body):
 
 
 func hit(damage, direction, source):
+	$AudioStreamPlayer3D.play()
 	action_delta = 0
 	impact_dir = direction * BASE_KNOCKBACK
 	impact_dir.y = 0

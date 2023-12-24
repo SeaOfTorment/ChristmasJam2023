@@ -699,3 +699,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.2737, 1.89972, -29.6378)
 shape = SubResource("BoxShape3D_xjbtc")
 
 [connection signal="has_died" from="SantaBoss" to="." method="_on_santa_boss_has_died"]
+[connection signal="body_entered" from="MusicOne" to="." method="_on_music_one_body_entered"]
