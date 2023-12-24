@@ -15,6 +15,10 @@ run/main_scene="res://levels/scenes/menu_scene/menu.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.png"
 
+[autoload]
+
+PlayerVariables="*res://main/player_variables.gd"
+
 [display]
 
 window/stretch/mode="viewport"
