@@ -512,7 +512,6 @@ npc_name = "Armory Elf"
 text_lines = Array[String](["Why was I born..."])
 interactable = true
 max_health = 12
-loot = 6
 
 [node name="Npc7" parent="Npcs" instance=ExtResource("9_5ij76")]
 transform = Transform3D(-1.49465, 4.77143e-16, -0.12664, 5.2318e-16, 1.5, -5.2318e-16, 0.12664, -5.65482e-16, -1.49465, -74.9716, 1.3032, 12.0996)
@@ -521,7 +520,6 @@ npc_name = "Enchanter Elf"
 text_lines = Array[String](["Why was I born..."])
 interactable = true
 max_health = 12
-loot = 6
 
 [node name="Npc8" parent="Npcs" instance=ExtResource("9_5ij76")]
 transform = Transform3D(-1.49465, 4.77143e-16, -0.12664, 5.2318e-16, 1.5, -5.2318e-16, 0.12664, -5.65482e-16, -1.49465, -63.6842, 1.3032, 10.0848)
@@ -530,7 +528,6 @@ npc_name = "Baker Elf"
 text_lines = Array[String](["Why was I born..."])
 interactable = true
 max_health = 12
-loot = 6
 
 [node name="Npc2" parent="Npcs" instance=ExtResource("9_5ij76")]
 transform = Transform3D(-0.422231, 0, 1.43935, 0, 1.5, 0, -1.43935, 0, -0.422231, -91.1883, 1.01113, 1.21327)

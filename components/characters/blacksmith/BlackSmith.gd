@@ -177,10 +177,10 @@ func _handle_hitbox_collision(body):
 		attack_hit_bodies.append(body)
 		var direction = (body.global_position - global_position).normalized()
 		direction.y = 0
-		body.hit(1, direction)
+		body.hit(1, direction, self)
 
 
-func hit(damage, direction):
+func hit(damage, direction, source):
 	action_delta = 0
 	impact_dir = direction * BASE_KNOCKBACK
 	impact_dir.y = 0

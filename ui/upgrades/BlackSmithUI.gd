@@ -51,9 +51,10 @@ var rolling_as_cal = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	#rolling_cost_cal = player_vars.current_upgrade+(3+abs(player_vars.current_upgrade))+1
-	#rolling_dmg_cal = player.stats.weapon_dmg * 1.35
-	#rolling_as_cal = player.stats.base_ms * 1.25
+	rolling_cost_cal = cost(next_upgrade)
+	rolling_dmg_cal = attack_boost(next_upgrade)
+	rolling_as_cal = attack_speed_boost(next_upgrade)
+	
 	render_weapon_stats2()
 	hide()
 	pass # Replace with function body.
@@ -82,10 +83,11 @@ func render_weapon_stats():
 	attribute_label.text = w_labels
 	
 func render_weapon_stats2():
-	name_label.text = "Weapon: " + player_vars.weapon + " MK: " + str(int_to_roman(player_vars.current_upgrade+3))
-	cost_label.text = rolling_cost_cal
-	dmg_label.text = rolling_dmg_cal
-	as_label.test = rolling_as_cal
+	name_label.text = "Weapon: " + player_vars.weapon + " MK: " + str(int_to_roman(next_upgrade))
+	cost_label.text = "Cost: " + str(rolling_cost_cal)
+	dmg_label.text = "DMG: +" + str(rolling_dmg_cal)
+	as_label.text = "Attack Speed: +" + str(rolling_as_cal).pad_decimals(2)
+	
 func int_to_roman(num: int) -> String:
 	var result: String = ""
 	var values: Array = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1]
@@ -101,11 +103,17 @@ func int_to_roman(num: int) -> String:
 
 func upgrade():
 	if player_vars.gold >= rolling_cost_cal: # condition
-		next_upgrade += 1
 		#UPGRADE
 		render_weapon_stats2()
-		player.stats.weapon_dmg = rolling_dmg_cal
-		player.stats.base_as = rolling_as_cal
+		player_vars.base_attack += rolling_dmg_cal
+		player_vars.base_attack_speed += rolling_as_cal
+		player_vars.gold -= rolling_cost_cal
+		next_upgrade += 1
+		player_vars.current_upgrade += 1
+		
+		rolling_cost_cal = cost(next_upgrade)
+		rolling_dmg_cal = attack_boost(next_upgrade)
+		rolling_as_cal = attack_speed_boost(next_upgrade)
 
 
 func exit():
@@ -132,3 +140,12 @@ func find_closest_number(target: int, numbers: Array) -> int:
 			closest_distance = distance
 
 	return closest_number
+
+func attack_boost(lvl):
+	return ((100/(lvl+10)) + 1) / 2
+
+func cost(lvl):
+	return floor(pow(lvl+1, 1.5))
+
+func attack_speed_boost(lvl):
+	return attack_boost(lvl)/25.0
