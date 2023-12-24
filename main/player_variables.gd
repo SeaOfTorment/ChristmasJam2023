@@ -6,6 +6,7 @@ var current_upgrade = -1
 var gold = 2000
 var weapon = "Candy cane sword"
 
+var kill_count = 0
 var base_attack = 1
 var base_health = 100
 var base_movement = 1

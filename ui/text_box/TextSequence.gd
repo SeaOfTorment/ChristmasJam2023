@@ -1,4 +1,4 @@
-extends Control
+extends CanvasLayer
 
 signal done
 
@@ -10,9 +10,10 @@ signal done
 # Called when the node enters the scene tree for the first time.
 
 func _ready():
+	print(player)
 	player.being_controlled = true
 	
-	$TextBox.display_lines(npc_name, text_lines)
+	$TextBox.display_text(npc_name, text_lines)
 	
 	pass # Replace with function body.
 
@@ -20,7 +21,3 @@ func _ready():
 func finished():
 	player.being_controlled = false
 	done.emit()
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass

@@ -10,7 +10,7 @@ func _ready():
 	$Door.visible = false
 
 
-func on_interaction(source):
+func on_interaction(_source):
 	$CanvasLayer/TextBox.display_text("Jail Wall", ["It seems to be breakable... (It has " + str(health) + " health)"])
 
 
@@ -36,6 +36,7 @@ func break_door():
 func hit(damage, _direction, _source):
 	print("breaking!!!")
 	
+	$AudioStreamPlayer3D.play()
 	health -= damage
 	
 	if health <= 0:

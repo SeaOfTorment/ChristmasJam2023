@@ -1,5 +1,6 @@
-[gd_scene load_steps=27 format=3 uid="uid://e2v8ph1nln6"]
+[gd_scene load_steps=28 format=3 uid="uid://e2v8ph1nln6"]
 
+[ext_resource type="Script" path="res://assets/character/santa.gd" id="1_u7sat"]
 [ext_resource type="ArrayMesh" uid="uid://b4k6ecgia3x1c" path="res://assets/character/mesh/AnvilHammer.res" id="2_hk8fy"]
 [ext_resource type="Material" uid="uid://ds2i5hgjb58jb" path="res://assets/character/material/CJ23_Mat_Base.tres" id="2_l05ir"]
 [ext_resource type="AudioStream" uid="uid://7u21h3cdecmg" path="res://sounds/placeholder_sword_sfx/ph_attack.wav" id="3_acf8s"]
@@ -7543,6 +7544,7 @@ _data = {
 }
 
 [node name="character_model" type="Node3D"]
+script = ExtResource("1_u7sat")
 
 [node name="rig_deform" type="Node3D" parent="."]
 
@@ -7808,3 +7810,5 @@ mix_target = 1
 libraries = {
 "": SubResource("AnimationLibrary_wc5li")
 }
+
+[connection signal="body_entered" from="rig_deform/Skeleton3D/BoneAttachment3D/AnvilHammer/AttackHitbox" to="." method="_on_attack_hitbox_body_entered"]

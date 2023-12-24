@@ -148,7 +148,6 @@ func _ready():
 			):
 			change_target()
 
-
 #
 #	Interaction Functions
 #
@@ -255,6 +254,7 @@ func _handle_hitbox_collision(body):
 
 
 func hit(incoming_damage, direction, source):
+	$AudioStreamPlayer3D.play()
 	action_delta = 0
 	impact_dir = direction * BASE_KNOCKBACK
 	impact_dir.y = 0
@@ -283,8 +283,6 @@ func change_target():
 	var crazies = get_tree().get_nodes_in_group("crazies")
 	target_to_attack = crazies[randi() % crazies.size()]
 	detect_range = 100
-	
-
 
 #
 #	State Updates
@@ -381,6 +379,7 @@ func _physics_process(delta):
 			target_to_attack.active_state == DEAD
 			)):
 			change_target()
+		
 		
 		_update_cd(delta)
 		if hitbox: _handle_attack(delta)

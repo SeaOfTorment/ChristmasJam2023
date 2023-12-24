@@ -7,5 +7,9 @@
 script = ExtResource("1_hvdyn")
 
 [node name="TextBox" parent="." instance=ExtResource("2_67yix")]
+offset_left = 250.0
+offset_top = 396.0
+offset_right = 250.0
+offset_bottom = 396.0
 
 [connection signal="done" from="TextBox" to="." method="finished"]

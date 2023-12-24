@@ -5,6 +5,7 @@ signal done
 var index = 0
 var lines = []
 
+var counter = 0
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	hide()
@@ -14,7 +15,7 @@ func _ready():
 func display_text(user, text_lines):
 	show()
 	$Name.text = user
-	
+	counter = 0.5
 	index = 0
 	lines = text_lines
 	
@@ -33,7 +34,8 @@ func resize_font():
 	$Content.add_font_override("string_name", font)
 
 
-func _process(_delta):
-	if Input.is_action_just_pressed("ui_accept"):
+func _process(delta):
+	counter -= delta
+	if Input.is_action_just_pressed("ui_accept") or (counter < 0 and Input.is_action_just_pressed("interact")):
 		index += 1
 		show_line()

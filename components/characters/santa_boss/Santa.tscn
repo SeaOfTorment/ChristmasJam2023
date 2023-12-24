@@ -1,0 +1,51 @@
+[gd_scene load_steps=8 format=3 uid="uid://cbgydd2cvlwkc"]
+
+[ext_resource type="Script" path="res://components/characters/santa_boss/Santa.gd" id="1_wclc3"]
+[ext_resource type="PackedScene" uid="uid://c182807713qq8" path="res://components/characters/santa_boss/SantaOverheadUI.tscn" id="2_44xb4"]
+[ext_resource type="PackedScene" uid="uid://e2v8ph1nln6" path="res://assets/character/santa.tscn" id="3_17ucw"]
+[ext_resource type="PackedScene" uid="uid://da4d3o0ywep7l" path="res://ui/text_box/TextBox.tscn" id="4_smswm"]
+[ext_resource type="AudioStream" uid="uid://o6ypn3i8egp8" path="res://sounds/zapsplat_cartoon_hit_thud_thump_001_95671.mp3" id="5_7t5cq"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_wku1q"]
+radius = 0.3
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_p5d0k"]
+viewport_path = NodePath("SubViewport")
+
+[node name="SantaBoss" type="CharacterBody3D" groups=["interactables"]]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+script = ExtResource("1_wclc3")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+transparent_bg = true
+
+[node name="NpcHpOverhead" parent="SubViewport" instance=ExtResource("2_44xb4")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.930355, 0)
+shape = SubResource("CapsuleShape3D_wku1q")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+
+[node name="character_model" parent="." instance=ExtResource("3_17ucw")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="TextBox" parent="CanvasLayer" instance=ExtResource("4_smswm")]
+offset_left = 237.0
+offset_top = 397.0
+offset_right = 237.0
+offset_bottom = 397.0
+metadata/_edit_use_anchors_ = true
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 2.21722, 0)
+modulate = Color(1, 0.223529, 0.588235, 1)
+billboard = 1
+texture = SubResource("ViewportTexture_p5d0k")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("5_7t5cq")
+volume_db = -5.0
+
+[connection signal="hitbox" from="character_model" to="." method="_handle_hitbox_collision"]

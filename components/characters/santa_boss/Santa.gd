@@ -1,17 +1,17 @@
 extends CharacterBody3D
 
-enum { IDLE=0, RUN=1, LAND=2, FALL=3, JUMP=4, ATTACK=5, IMPACT=6, DEAD=100, NOT_DEAD=101}
+enum { IDLE=0, RUN=1, LAND=2, FALL=3, JUMP=4, ATTACK=5, IMPACT=6, DEAD=100}
+enum AI_STATE { AI_IDLE=0, AI_WANDER=1 }
 
 signal finish_control
 signal has_died(dead, killer)
 
-const KILL_HEIGHT = -50
-const SPEED = 5.0
+const KILL_HEIGHT = -100
+const SPEED = 3.0
 const JUMP_VELOCITY = 6
 const SENSE_REDUCE = 0.5
 
 const ATTACK_SLOW = 0.1
-const INTERACT_RANGE = 3
 
 const JUMP_TIME = 0.8
 const LAND_TIME = 0.2
@@ -19,38 +19,59 @@ const LAND_TIME = 0.2
 const BASE_KNOCKBACK = 10
 const STUN_TIME = 0.2
 
-const HEAL_TIME = 5
+const DIRECTIONS = [
+	Vector3(1, 0, 0),
+	Vector3(0, 0, 1),
+	Vector3(-1, 0, 0),
+	Vector3(0, 0, -1)
+]
 
 const ANIMATION_MAP = {
-	IDLE: "idle",
-	RUN: "run",
-	FALL: "AirTime",
-	JUMP: "jump",
-	IMPACT: "impact2",
-	ATTACK: "attack1",
-	LAND: "Land",
-	DEAD: "death"
+	IDLE: "Baked_Idle",
+	RUN: "Baked_Run",
+	FALL: "Baked_Falling",
+	JUMP: "Baked_FallingStart",
+	IMPACT: "Baked_Get-Hit",
+	ATTACK: "Baked_Attack_Weapon",
+	LAND: "Baked_FallingEnd",
+	DEAD: "Baked_Death"
 }
 
 const ACTION_DATA = {
 	"basic_attack": {
 		"time": 1.7,
-		"impact_start": 0.5,
-		"impact_end": 1.6,
+		"impact_start": 0.4,
+		"impact_end": 0.7,
 		"cd": 1.8,
 	}
 }
 
-@onready var camera_mount = $CameraMount
-@onready var hitbox = $betterAnim/Armature/Skeleton3D/BoneAttachment3D/sword/AttackHitbox
+@export_enum("BlackSmithElf", "CookElf", "EmoElf", "EnchanterElf", "FriendlyElf", "RebelElf", "Reindeer", "SantaElf", "Yeti") var model
+@export var npc_name : String = "Santa"
+@export var text_lines : Array[String]
+@export var interactable : bool
+@export var max_health = 5000
+@export var damage = 30
+@export var loot_amount = 1000000
+@export var detect_range = 5
+@export var movement_speed = 1.5
+@export var attack_speed = 2
 
-@onready var mesh = $betterAnim
-@onready var animation = $betterAnim/AnimationPlayer
+@export var crazy : bool = false
 
-var mouse_lock = true
+var health
+var killer = self
+var killer_timer = 0
+
+@onready var hitbox = $character_model/rig_deform/Skeleton3D/BoneAttachment3D/AnvilHammer/AttackHitbox
+
+@onready var mesh = $character_model
+@onready var animation = $character_model/AnimationPlayer
+
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
+
 
 var mouse_sens_x = 0.1
 var mouse_sens_y = 0.1
@@ -68,10 +89,9 @@ var active_cds = {
 	"basic_attack": 0
 }
 
-var curr_direction = Vector3(1, 0, 0)
+var curr_direction = Vector3(0, 0, 1)
 var curr_action = "basic_attack"
 var action_delta = 0
-var attack_hit_bodies = []
 
 var pending_states = []
 var active_state = IDLE
@@ -79,22 +99,10 @@ var active_state = IDLE
 var jump_state_cd = 0
 var land_state_cd = 0
 
-var heal_timer = 0
-
 var impact_timer = 0
 var impact_dir = Vector3(0, 0, 0)
 
-#Game variables
-@onready var player_vars = get_node("/root/PlayerVariables")
-var hp
-var killer
-var killer_timer = 0.0
-
-var max_health = 100.0
-var attack_damage = 1.0
-var attack_speed = 1.0
-var movement_speed = 1.0
-var heal_rate = 1.0
+var attack_hit_bodies = []
 
 #
 # Animation vars
@@ -116,107 +124,81 @@ var being_controlled = false
 var control_time = 0
 var current_control = DEFAULT_CONTROL.duplicate()
 
-var nearest_interactable = null
 
+@export var target_to_attack : CharacterBody3D
+@onready var nav_agent = $NavigationAgent3D
+
+var ai_timer = 0
+var curr_ai_state = AI_STATE.AI_IDLE
+var wander_dir = DIRECTIONS[0]
 
 func _ready():
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	_update_stats()
-	hp = max_health
-	
-	$CanvasLayer/DeathUI.hide()
+	health = max_health
+	$SubViewport/NpcHpOverhead.max_value = health
+	$SubViewport/NpcHpOverhead.value = health
+
 
 
 #
-#	Input Monitoring
+#	Interaction Functions
 #
-func _input(event):
-	if active_state != DEAD and mouse_lock and event is InputEventMouseMotion:
-		rotate_y(deg_to_rad(-event.relative.x * mouse_sens_x * SENSE_REDUCE))
-		camera_mount.rotate_x(deg_to_rad(-event.relative.y * mouse_sens_y * SENSE_REDUCE))
-		camera_mount.rotation.x = clamp(camera_mount.rotation.x, deg_to_rad(-90), deg_to_rad(90))
+func on_interaction(_source):
+	$CanvasLayer/TextBox.display_text(npc_name, text_lines)
 
 
-func _check_input_pressed(action):
-	if Input.is_action_pressed(action):
-		input[action] = true
-	else:
-		input[action] = false
+func get_interaction_text():
+	return "Talk to " + npc_name
 
 
-func _check_input_just_pressed(action):
-	if Input.is_action_just_pressed(action):
-		input[action] = true
-	else:
-		input[action] = false
+func can_interact():
+	return interactable
 
 
-func _handle_input():
-	_check_input_pressed("move_left")
-	_check_input_pressed("move_right")
-	_check_input_pressed("move_forward")
-	_check_input_pressed("move_backwards")
-	_check_input_just_pressed("jump")
-	_check_input_pressed("attack")
+func _handle_ai(delta):
+	ai_timer -= delta
+	nav_agent.target_position = target_to_attack.position
 	
-	if Input.is_action_just_pressed("interact"):
-		if nearest_interactable:
-			nearest_interactable.on_interaction(self)
-			
-	if Input.is_action_just_pressed("settings"):
-		if mouse_lock:
-			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-			$"CanvasLayer/settings_ui".visible = true
-			mouse_lock = false
+	var dist = (nav_agent.target_position - global_position).length_squared()
+	if dist > detect_range * detect_range:
+		if ai_timer > 0:
+			_do_passive_ai(delta)
 		else:
-			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-			mouse_lock = true
-			$"CanvasLayer/settings_ui".visible = false
+			_random_passive()
+		return
 
-
-#
-#	Interaction Monitoring
-#
-func _check_interactables():
-	var interactables = get_tree().get_nodes_in_group("interactables")
-	if interactables.size() < 1:
-		nearest_interactable = null
-		$CanvasLayer/InteractIndicator.hide()
+	
+	input["attack"] = false
+	var next_path_position: Vector3 = nav_agent.get_next_path_position()
+	
+	next_path_position.y = global_position.y
+	
+	if dist < 3 or global_transform.origin.is_equal_approx(next_path_position):
+		input["move_forward"] = false
+		input["attack"] = true
 		return
 	
-	var nearest = interactables[0]
-	var dist = nearest.global_position.distance_to(global_position)
-
-	for i in interactables:
-		if i.global_position.distance_to(global_position) < nearest.global_position.distance_to(global_position):
-			nearest = i
-			dist = nearest.global_position.distance_to(global_position)
-	
-	if dist < INTERACT_RANGE and nearest.can_interact():
-		show_interactable_ui(nearest)
-		nearest_interactable = nearest
-	else:
-		nearest_interactable = null
-		$CanvasLayer/InteractIndicator.hide()
+	look_at(next_path_position)
+	input["move_forward"] = true
 
 
-func show_interactable_ui(object):
-	$CanvasLayer/InteractIndicator.show()
-	$CanvasLayer/InteractIndicator/RichTextLabel.text = "E to " + object.get_interaction_text()
-	pass
+func _random_passive():
+	curr_ai_state = randi() % 2 as AI_STATE
+	match(curr_ai_state):
+		AI_STATE.AI_IDLE:
+			ai_timer = 2
+			pass
+		AI_STATE.AI_WANDER:
+			ai_timer = 1
+			wander_dir = DIRECTIONS[randi() % DIRECTIONS.size()]
 
-#
-#	Handle Healing
-#
-func _handle_heal(delta):
-	if heal_timer > 0:
-		heal_timer -= delta
-		return
-	
-	heal_timer = HEAL_TIME / heal_rate
-	hp += 1
-	hp = min(hp, max_health)
 
+func _do_passive_ai(_delta):
+	match(curr_ai_state):
+		AI_STATE.AI_WANDER:
+			look_at(global_position + wander_dir)
+			input["move_forward"] = true
+		_:
+			input["move_forward"] = false
 
 #
 #	Handle Attack
@@ -241,17 +223,12 @@ func _handle_attack(delta):
 	var t = a_data["time"] / attack_speed - action_delta
 	
 	if (
-		t >= a_data["impact_start"]/ attack_speed and
+		t >= a_data["impact_start"] / attack_speed and 
 		t <= a_data["impact_end"] / attack_speed
 		):
 		hitbox.monitoring = true
 	else:
 		hitbox.monitoring = false
-
-
-func loot(gold):
-	player_vars.gold += gold
-	player_vars.kill_count += 1
 
 
 #
@@ -264,10 +241,10 @@ func _handle_hitbox_collision(body):
 		attack_hit_bodies.append(body)
 		var direction = (body.global_position - global_position).normalized()
 		direction.y = 0
-		body.hit(attack_damage, direction, self)
+		body.hit(damage, direction, self)
 
 
-func hit(damage, direction, source):
+func hit(incoming_damage, direction, source):
 	$AudioStreamPlayer3D.play()
 	action_delta = 0
 	impact_dir = direction * BASE_KNOCKBACK
@@ -275,7 +252,8 @@ func hit(damage, direction, source):
 	if active_state != IMPACT:
 		impact_timer = STUN_TIME
 	add_state(IMPACT)
-	hp -= damage
+	health -= incoming_damage
+	$SubViewport/NpcHpOverhead.value = health
 	
 	killer = source
 	killer_timer = 10
@@ -286,6 +264,19 @@ func _update_cd(delta):
 		active_cds[key] -= delta
 
 
+func loot(_gold):
+	if crazy:
+		change_target()
+	pass
+
+
+func change_target():
+	var crazies = get_tree().get_nodes_in_group("crazies")
+	target_to_attack = crazies[randi() % crazies.size()]
+	detect_range = 100
+	
+
+
 #
 #	State Updates
 #
@@ -294,6 +285,9 @@ func add_state(new_state):
 
 
 func _check_for_states(delta):
+	if active_state == DEAD:
+		add_state(DEAD)
+		return
 	if not is_on_floor():
 		add_state(FALL)
 		land_state_cd = LAND_TIME
@@ -329,43 +323,34 @@ func _state_update(state, _prev_state): #underscored to prevent error on unused 
 			animation.speed_scale = 1
 	else:
 		animation.speed_scale = 1
-		animation.play("idle")
+		animation.play("Baked_Idle")
 
 
 func _check_for_death():
-	if hp <= 0 or position.y < KILL_HEIGHT:
+	if health <= 0 or position.y < KILL_HEIGHT:
 		if killer_timer > 0:
 			if not is_instance_valid(killer):
 				killer = null
 			if killer:
-				print("died to ", killer)
+				if killer.has_method("loot"):
+					killer.loot(randi_range(loot_amount, loot_amount * 2))
 		has_died.emit(self, killer)
 		add_state(DEAD)
-		player_vars.death_count += 1
-		await get_tree().create_timer(2).timeout
-		$CanvasLayer/DeathUI.show_death()
+		print("has DIED!!!!!")
+		interactable = false
+		remove_from_group("crazies")
+		set_physics_process(false)
+		$CollisionShape3D.set_deferred("disabled", true)
+		$SubViewport/NpcHpOverhead.queue_free()
 		#queue_free()
 
-
-func respawn():
-	var spawn_point = get_tree().get_first_node_in_group("spawn_points")
-	
-	if spawn_point:
-		global_position = spawn_point.global_position
-	else:
-		print("no spawn point!")
-	active_state = IDLE
-	add_state(NOT_DEAD)
-	hp = max_health / 2.0
 
 
 #
 #	Game Updates
 #
 func _physics_process(delta):
-	_handle_input()
-	_update_stats()
-	if !mouse_lock or active_state == DEAD:
+	if active_state == DEAD:
 		return
 	
 	killer_timer -= delta
@@ -374,16 +359,16 @@ func _physics_process(delta):
 	if being_controlled:
 		_handle_controller(delta)
 		return
-
 	
 	if active_state == IMPACT:
 		if (impact_timer - STUN_TIME > -0.01):
 			velocity = impact_dir
 	else:
-		_handle_heal(delta)
+		if target_to_attack and is_instance_valid(target_to_attack):
+			_handle_ai(delta)
+		
 		_update_cd(delta)
-		_handle_attack(delta)
-		_check_interactables()
+		if hitbox: _handle_attack(delta)
 		
 		if input["attack"]: attack()
 		
@@ -416,12 +401,8 @@ func _update_player_direction(local_dir):
 		curr_direction = temp
 	
 	mesh.transform = mesh.transform.interpolate_with(mesh.transform.looking_at(curr_direction * -10), 0.2)
+	hitbox.transform = mesh.transform
 
-func _update_stats():
-	attack_damage = player_vars.base_attack * player_vars.bonus_attack
-	max_health = player_vars.base_health * player_vars.bonus_health
-	movement_speed = player_vars.base_movement * player_vars.bonus_movement
-	attack_speed = player_vars.base_attack_speed * player_vars.bonus_attack_speed
 
 #
 #	animation control
