@@ -104,7 +104,7 @@ func upgrade():
 	if player_vars.gold >= rolling_cost_cal: # condition
 		#UPGRADE
 		
-		player_vars.bonus_heal_rate += 0.1
+		player_vars.base_heal_rate += 0.1
 		player_vars.current_upgrade += 1
 		player_vars.gold -= rolling_cost_cal
 		next_upgrade += 1
