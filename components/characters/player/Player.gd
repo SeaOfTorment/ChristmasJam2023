@@ -83,8 +83,8 @@ var land_state_cd = 0
 var impact_timer = 0
 var impact_dir = Vector3(0, 0, 0)
 
-
 #Game variables
+@onready var player_vars = get_node("/root/PlayerVariables")
 var hp
 var killer
 var killer_timer = 0.0
@@ -111,10 +111,12 @@ var current_control = DEFAULT_CONTROL.duplicate()
 
 var nearest_interactable = null
 
+
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	var temp_stats = calc_stats()
 	hp = temp_stats["HP"]
+
 
 #
 #	Input Monitoring
@@ -161,7 +163,7 @@ func _handle_input():
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 			mouse_lock = true
 			$"CanvasLayer/settings_ui".visible = false
-			
+
 
 #
 #	Interaction Monitoring
@@ -223,6 +225,10 @@ func _handle_attack(delta):
 		hitbox.monitoring = false
 
 
+func loot(gold):
+	player_vars.gold += gold
+
+
 #
 #	ETC
 #
@@ -234,7 +240,6 @@ func _handle_hitbox_collision(body):
 		var direction = (body.global_position - global_position).normalized()
 		direction.y = 0
 		body.hit(stats.weapon_dmg + passives.damage, direction, self)
-
 
 
 func hit(damage, direction, source):
@@ -307,11 +312,13 @@ func _check_for_death():
 		await get_tree().create_timer(2).timeout
 		#queue_free()
 
+
 #
 #	Game Updates
 #
 func _physics_process(delta):
-	if active_state == DEAD:
+	_handle_input()
+	if !mouse_lock or active_state == DEAD:
 		return
 	
 	killer_timer -= delta
@@ -321,16 +328,11 @@ func _physics_process(delta):
 		_handle_controller(delta)
 		return
 	
-	if !mouse_lock:
-		_handle_input()
-		return
-
 	
 	if active_state == IMPACT:
 		if (impact_timer - STUN_TIME > -0.01):
 			velocity = impact_dir
 	else:
-		_handle_input()
 		_update_cd(delta)
 		_handle_attack(delta)
 		_check_interactables()
@@ -371,7 +373,6 @@ func _update_player_direction(local_dir):
 #
 #	animation control
 #
-
 func set_control(params = {}):
 	current_control = DEFAULT_CONTROL.duplicate()
 	
