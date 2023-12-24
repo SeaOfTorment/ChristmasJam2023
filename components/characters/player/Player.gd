@@ -120,7 +120,7 @@ func _ready():
 #	Input Monitoring
 #
 func _input(event):
-	if mouse_lock and event is InputEventMouseMotion:
+	if active_state != DEAD and mouse_lock and event is InputEventMouseMotion:
 		rotate_y(deg_to_rad(-event.relative.x * mouse_sens_x * SENSE_REDUCE))
 		camera_mount.rotate_x(deg_to_rad(-event.relative.y * mouse_sens_y * SENSE_REDUCE))
 		camera_mount.rotation.x = clamp(camera_mount.rotation.x, deg_to_rad(-90), deg_to_rad(90))
@@ -311,7 +311,8 @@ func _check_for_death():
 #	Game Updates
 #
 func _physics_process(delta):
-	if active_state == DEAD:
+	_handle_input()
+	if !mouse_lock or active_state == DEAD:
 		return
 	
 	killer_timer -= delta
@@ -321,16 +322,13 @@ func _physics_process(delta):
 		_handle_controller(delta)
 		return
 	
-	if !mouse_lock:
-		_handle_input()
-		return
+
 
 	
 	if active_state == IMPACT:
 		if (impact_timer - STUN_TIME > -0.01):
 			velocity = impact_dir
 	else:
-		_handle_input()
 		_update_cd(delta)
 		_handle_attack(delta)
 		_check_interactables()
