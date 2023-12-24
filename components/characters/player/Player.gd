@@ -3,7 +3,7 @@ extends CharacterBody3D
 enum { IDLE=0, RUN=1, LAND=2, FALL=3, JUMP=4, ATTACK=5, IMPACT=6, DEAD=100}
 
 signal finish_control
-signal has_died
+signal has_died(dead, killer)
 
 const KILL_HEIGHT = -50
 const SPEED = 5.0
@@ -307,7 +307,7 @@ func _check_for_death():
 				killer = null
 			if killer:
 				print("died to ", killer)
-		emit_signal("has_died")
+		has_died.emit(self, killer)
 		add_state(DEAD)
 		await get_tree().create_timer(2).timeout
 		#queue_free()

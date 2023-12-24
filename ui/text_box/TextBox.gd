@@ -31,7 +31,7 @@ func resize_font():
 	$Content.add_font_override("string_name", font)
 
 
-func _process(delta):
+func _process(_delta):
 	if Input.is_action_just_pressed("ui_accept"):
 		index += 1
 		show_line()

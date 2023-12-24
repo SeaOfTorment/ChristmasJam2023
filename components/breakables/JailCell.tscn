@@ -1,0 +1,19 @@
+[gd_scene load_steps=5 format=3 uid="uid://cj6qpx5nd4wxx"]
+
+[ext_resource type="PackedScene" uid="uid://bewio44cvwuop" path="res://components/breakables/door.tscn" id="1_2kx73"]
+[ext_resource type="Script" path="res://components/breakables/JailCell.gd" id="1_287hg"]
+[ext_resource type="PackedScene" uid="uid://sj0tbivgf6po" path="res://components/breakables/NotBrokenDoor.glb" id="2_q88u6"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_sc27i"]
+size = Vector3(0.2, 8, 5)
+
+[node name="JailCell" type="StaticBody3D"]
+script = ExtResource("1_287hg")
+
+[node name="NotBrokenDoor" parent="." instance=ExtResource("2_q88u6")]
+
+[node name="Door" parent="." instance=ExtResource("1_2kx73")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.00921)
+shape = SubResource("BoxShape3D_sc27i")
