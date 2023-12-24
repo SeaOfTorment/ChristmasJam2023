@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://da6urvjkyqud6"]
+
+[ext_resource type="PackedScene" uid="uid://cc8iflvo0ol0g" path="res://levels/scenes/factory_scene/prefabs/green_present.glb" id="1_lkti2"]
+
+[node name="green_present" instance=ExtResource("1_lkti2")]
+
+[node name="green present" parent="." index="0"]
+transform = Transform3D(0.309189, 0, 0, 0, 0.309189, 0, 0, 0, 0.309189, 0, 0.429276, 0)

@@ -71,8 +71,8 @@ script = ExtResource("12_5am3i")
 [node name="cam_body2_009" parent="." index="69"]
 script = ExtResource("12_5am3i")
 
-[node name="Sphere_005" parent="." index="71"]
+[node name="Sphere_005" parent="." index="75"]
 transform = Transform3D(0, 0.0744724, 9.51194e-09, -9.51194e-09, 4.4389e-09, -0.106389, -0.106389, 0, 6.34129e-09, 0.168648, 2.92157, 50.0579)
 
-[node name="Sphere_001" parent="." index="72"]
+[node name="Sphere_001" parent="." index="76"]
 transform = Transform3D(0, -0.0744724, -9.51194e-09, -9.51194e-09, 4.4389e-09, -0.106389, 0.106389, 0, -1.26826e-08, -40.6729, 2.85739, -18.7796)
