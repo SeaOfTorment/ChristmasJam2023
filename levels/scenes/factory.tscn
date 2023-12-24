@@ -511,22 +511,22 @@ interactable = true
 [node name="boxes_pawn_points" type="Node" parent="."]
 
 [node name="Marker3D" type="Marker3D" parent="boxes_pawn_points"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.958806, 0.873749, 33.0732)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.958806, 1.17004, 33.0732)
 
 [node name="Marker3D2" type="Marker3D" parent="boxes_pawn_points"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.22434, 0.873749, 33.0732)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.22434, 1.17635, 33.0732)
 
 [node name="Marker3D3" type="Marker3D" parent="boxes_pawn_points"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.6503, 0.873749, 33.0732)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.6503, 0.991728, 33.0732)
 
 [node name="Marker3D4" type="Marker3D" parent="boxes_pawn_points"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.8356, 0.873749, 33.0732)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.8356, 1.01324, 33.0732)
 
 [node name="Marker3D5" type="Marker3D" parent="boxes_pawn_points"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.1506, 0.873749, 33.0732)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.1506, 1.0491, 33.0732)
 
 [node name="Marker3D6" type="Marker3D" parent="boxes_pawn_points"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.3882, 0.873749, 33.0732)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.3882, 1.07982, 33.0732)
 
 [node name="gift_boxes" type="Node" parent="."]
 
