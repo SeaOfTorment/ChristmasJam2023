@@ -1,13 +1,15 @@
-[gd_scene load_steps=5 format=3 uid="uid://dis5xuhvijuh"]
+[gd_scene load_steps=6 format=3 uid="uid://dis5xuhvijuh"]
 
 [ext_resource type="Script" path="res://components/characters/npc/Npc.gd" id="1_dd1up"]
 [ext_resource type="PackedScene" uid="uid://di3bq3ovj0hxc" path="res://components/characters/player/PlayerMeshMain.tscn" id="2_g72oc"]
 [ext_resource type="PackedScene" uid="uid://can4b1yjl3w0r" path="res://assets/character/character_model.tscn" id="4_6qu3a"]
+[ext_resource type="PackedScene" uid="uid://da4d3o0ywep7l" path="res://ui/text_box/TextBox.tscn" id="4_tj7up"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_wku1q"]
 radius = 0.3
 
 [node name="Npc" type="CharacterBody3D" groups=["interactables"]]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0)
 script = ExtResource("1_dd1up")
 
 [node name="betterAnim" parent="." instance=ExtResource("2_g72oc")]
@@ -21,4 +23,11 @@ shape = SubResource("CapsuleShape3D_wku1q")
 
 [node name="character_model" parent="." instance=ExtResource("4_6qu3a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.959385, 0)
-model = 8
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="TextBox" parent="CanvasLayer" instance=ExtResource("4_tj7up")]
+offset_left = 237.0
+offset_top = 397.0
+offset_right = 237.0
+offset_bottom = 397.0

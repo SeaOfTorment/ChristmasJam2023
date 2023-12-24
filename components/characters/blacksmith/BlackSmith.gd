@@ -117,6 +117,10 @@ func get_interaction_text():
 	return "Talk to blacksmith"
 
 
+func can_interact():
+	return true
+
+
 func _handle_ai(_delta):
 	nav_agent.target_position = target_to_attack.position
 	
