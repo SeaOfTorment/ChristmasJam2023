@@ -5,6 +5,8 @@
 Panel/styles/panel = null
 
 [node name="InteractIndicator" type="Control"]
+z_index = 4096
+z_as_relative = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

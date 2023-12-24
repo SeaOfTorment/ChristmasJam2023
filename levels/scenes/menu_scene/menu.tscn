@@ -8,7 +8,7 @@
 [ext_resource type="Script" path="res://levels/scenes/menu_scene/fps_counter.gd" id="6_54ews"]
 [ext_resource type="PackedScene" uid="uid://dcm4k4d0ut1ke" path="res://components/particles/snow_fall.tscn" id="6_fw5kd"]
 [ext_resource type="PackedScene" uid="uid://dagfu4kuaj1db" path="res://levels/scenes/menu_scene/scene_landscape_inh.tscn" id="7_skmbg"]
-[ext_resource type="AudioStream" uid="uid://bbdsx3jvg6rt" path="res://sounds/menu_scene_theme.mp3" id="8_qyeu1"]
+[ext_resource type="AudioStream" uid="uid://c4ryh0ps40tri" path="res://sounds/music/JameGaeChristmas_Music_Overworld_1.0.wav" id="9_8r515"]
 [ext_resource type="Script" path="res://levels/scenes/menu_scene/scene_settings/Play Button.gd" id="9_aknkl"]
 [ext_resource type="PackedScene" uid="uid://brxjo6d4lgrnl" path="res://levels/scenes/factory.tscn" id="11_pv8va"]
 
@@ -684,7 +684,7 @@ environment = SubResource("Environment_jsg02")
 camera_attributes = SubResource("CameraAttributesPractical_ruoy7")
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
-stream = ExtResource("8_qyeu1")
+stream = ExtResource("9_8r515")
 volume_db = -3.0
 autoplay = true
 

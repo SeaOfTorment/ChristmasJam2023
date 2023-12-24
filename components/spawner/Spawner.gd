@@ -96,7 +96,6 @@ func _process(delta):
 	var idx = spawnables[randi() % spawnables.size()]
 	var dat = NPC_DATA[idx]
 	
-	print("spawn")
 	var new_spawn = npcs.instantiate()
 	new_spawn.max_health = dat["health"] * spawner_level
 	new_spawn.damage = dat["damage"] * spawner_level

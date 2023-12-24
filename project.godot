@@ -21,6 +21,7 @@ PlayerVariables="*res://main/player_variables.gd"
 
 [display]
 
+window/stretch/mode="viewport"
 window/stretch/aspect="ignore"
 window/vsync/vsync_mode=0
 

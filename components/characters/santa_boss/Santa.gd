@@ -47,15 +47,15 @@ const ACTION_DATA = {
 }
 
 @export_enum("BlackSmithElf", "CookElf", "EmoElf", "EnchanterElf", "FriendlyElf", "RebelElf", "Reindeer", "SantaElf", "Yeti") var model
-@export var npc_name : String = "Elf"
+@export var npc_name : String = "Santa"
 @export var text_lines : Array[String]
 @export var interactable : bool
-@export var max_health = 5
-@export var damage = 10
-@export var loot_amount = 1
-@export var detect_range = 10
-@export var movement_speed = 1
-@export var attack_speed = 1
+@export var max_health = 5000
+@export var damage = 30
+@export var loot_amount = 1000000
+@export var detect_range = 5
+@export var movement_speed = 1.5
+@export var attack_speed = 2
 
 @export var crazy : bool = false
 
@@ -63,7 +63,7 @@ var health
 var killer = self
 var killer_timer = 0
 
-@onready var hitbox = $Area3D
+@onready var hitbox = $character_model/rig_deform/Skeleton3D/BoneAttachment3D/AnvilHammer/AttackHitbox
 
 @onready var mesh = $character_model
 @onready var animation = $character_model/AnimationPlayer
@@ -136,17 +136,8 @@ func _ready():
 	health = max_health
 	$SubViewport/NpcHpOverhead.max_value = health
 	$SubViewport/NpcHpOverhead.value = health
-	$character_model.model = model
-	$character_model.cull_models()
-	
-	if crazy:
-		add_to_group("crazies")
-		if (
-			not target_to_attack or 
-			not is_instance_valid(target_to_attack) or 
-			target_to_attack.active_state == DEAD
-			):
-			change_target()
+
+
 
 #
 #	Interaction Functions
@@ -282,6 +273,8 @@ func change_target():
 	var crazies = get_tree().get_nodes_in_group("crazies")
 	target_to_attack = crazies[randi() % crazies.size()]
 	detect_range = 100
+	
+
 
 #
 #	State Updates
@@ -342,6 +335,7 @@ func _check_for_death():
 					killer.loot(randi_range(loot_amount, loot_amount * 2))
 		has_died.emit(self, killer)
 		add_state(DEAD)
+		print("has DIED!!!!!")
 		interactable = false
 		remove_from_group("crazies")
 		set_physics_process(false)
@@ -371,14 +365,6 @@ func _physics_process(delta):
 	else:
 		if target_to_attack and is_instance_valid(target_to_attack):
 			_handle_ai(delta)
-		elif (
-			crazy and (
-			not target_to_attack or 
-			not is_instance_valid(target_to_attack) or 
-			target_to_attack.active_state == DEAD
-			)):
-			change_target()
-		
 		
 		_update_cd(delta)
 		if hitbox: _handle_attack(delta)

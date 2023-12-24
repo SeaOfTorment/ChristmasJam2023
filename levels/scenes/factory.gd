@@ -22,3 +22,12 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	pass
+
+
+func _on_santa_boss_has_died(_dead, _killer):
+
+	await get_tree().create_timer(3).timeout
+	
+	get_tree().change_scene_to_packed(load("res://levels/scenes/snow_town_scene/snow_town.tscn"))
+	pass # Replace with function body.
+

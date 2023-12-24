@@ -10,7 +10,7 @@ func _ready():
 	$Door.visible = false
 
 
-func on_interaction(source):
+func on_interaction(_source):
 	$CanvasLayer/TextBox.display_text("Jail Wall", ["It seems to be breakable... (It has " + str(health) + " health)"])
 
 
